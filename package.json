@@ -9,15 +9,23 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@heroicons/react": "^2.2.0",
     "@heroui/button": "^2.2.23",
+    "@heroui/image": "^2.2.15",
+    "@heroui/input": "^2.4.24",
+    "@heroui/link": "^2.2.20",
+    "@heroui/navbar": "^2.2.21",
     "@heroui/react": "^2.8.1",
     "@heroui/system": "^2.4.19",
     "@heroui/theme": "^2.4.19",
+    "@hookform/resolvers": "^5.1.1",
     "framer-motion": "^12.23.6",
     "next": "^15.4.1",
     "postcss": "^8.5.6",
     "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "react-dom": "^19.1.0",
+    "react-hook-form": "^7.60.0",
+    "yup": "^1.6.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

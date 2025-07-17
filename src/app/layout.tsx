@@ -4,6 +4,7 @@ import './globals.css';
 import { HeroUIProvider } from '@heroui/react';
 import { SeoProvider } from 'context/SeoContext';
 import { SeoUpdater } from 'components/molecules/seoUpdater';
+import InitLayout from 'components/layouts/initLayout';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -30,7 +31,9 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <SeoProvider>
           <SeoUpdater />
-          <HeroUIProvider>{children}</HeroUIProvider>
+          <HeroUIProvider>
+            <InitLayout>{children}</InitLayout>
+          </HeroUIProvider>
         </SeoProvider>
       </body>
     </html>
