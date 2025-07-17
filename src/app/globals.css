@@ -8,6 +8,12 @@
   --foreground: #171717;
 }
 
+header {
+  padding-inline: 0 !important;
+  max-width: 1200px;
+  gap: 50px;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
