@@ -12,7 +12,7 @@ const NavBarItems = () => {
   const closeAll = () => setActiveId(null);
 
   return (
-    <div className="relative mt-3 px-3 pb-2 max-w-[1200px] mx-auto flex items-center gap-10">
+    <div className="relative mt-3 px-3 pb-2 max-w-[1200px] mx-auto flex items-center gap-10 border-b border-gray-300">
       <Department />
       <span className="font-semibold hover:text-green-500 duration-300">Home</span>
       <MenuDropdown id="ourStore" label="Our store" activeId={activeId} setActiveId={setActiveId}>

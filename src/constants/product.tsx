@@ -1,4 +1,10 @@
 import { Product } from 'views/NavBarItems/components/Special/components/ProductItem';
+import Vegetable from '../../public/images/vegetable.png';
+import Fruit from '../../public/images/pine-apple.webp';
+import Meat from '../../public/images/meat.png';
+import Milk from '../../public/images/meal.png';
+import Juice from '../../public/images/juice.png';
+import Bakery from '../../public/images/bakery.png';
 
 export const products: Product[] = [
   {
@@ -72,5 +78,32 @@ export const products: Product[] = [
     name: 'Chips',
     price: 35,
     discount: 14,
+  },
+];
+
+export const catalogItems: any[] = [
+  {
+    image: Vegetable.src,
+    name: 'Vegetable',
+  },
+  {
+    image: Fruit.src,
+    name: 'Fruits',
+  },
+  {
+    image: Meat.src,
+    name: 'Meats',
+  },
+  {
+    image: Milk.src,
+    name: 'Milk',
+  },
+  {
+    image: Juice.src,
+    name: 'Juices',
+  },
+  {
+    image: Bakery.src,
+    name: 'Bakery',
   },
 ];
