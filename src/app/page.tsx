@@ -1,10 +1,5 @@
-import { Button } from '@heroui/button';
-import Image from 'next/image';
+import HomeScreen from 'views/HomeScreen';
 
 export default function Home() {
-  return (
-    <div>
-      <Button color="primary">Click me!!!</Button>
-    </div>
-  );
+  return <HomeScreen />;
 }
