@@ -8,6 +8,17 @@
   --foreground: #171717;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 span,
+p,
+button {
+  color: #184363;
+}
+
 header {
   padding-inline: 0 !important;
   max-width: 1200px;

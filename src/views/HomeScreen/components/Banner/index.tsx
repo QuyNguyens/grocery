@@ -1,11 +1,11 @@
 'use client';
 
 import Slider from 'react-slick';
-import { NextArrow, PrevArrow } from 'views/NavBarItems/components/Special';
 import BannerItem from './components/BannerItem';
 import Banner1 from '../../../../../public/images/banner1.webp';
 import Banner2 from '../../../../../public/images/banner2.webp';
 import CatalogItems from './components/CatalogItems';
+import { NextArrow, PrevArrow } from 'components/molecules/arrowSlider';
 
 const Banner = () => {
   const settings = {

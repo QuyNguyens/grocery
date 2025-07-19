@@ -1,6 +1,9 @@
+'use client';
+
 import { Button } from '@heroui/button';
 import { Image } from '@heroui/image';
 import StarRatings from 'react-star-ratings';
+import React from 'react';
 
 export interface Product {
   image: React.ReactNode;
@@ -8,6 +11,7 @@ export interface Product {
   rating: number;
   price: number;
   discount: number;
+
   name: string;
 }
 
@@ -36,10 +40,10 @@ const ProductItem = ({ product }: ProductItemProps) => {
         {product.discount ? (
           <>
             <span className="line-through text-gray-500">${product.price}.00</span>
-            <span className="text-red-500 font-semibold">
+            <span className="text-red-500! font-semibold">
               ${Math.ceil(product.price - (product.price * product.discount) / 100)}.00
             </span>
-            <div className="px-1.5 py-0.5 bg-green-500 rounded-lg font-bold text-white flex items-center justify-center text-xs">
+            <div className="px-1.5 py-0.5 bg-green-500 rounded-lg font-bold text-white! flex items-center justify-center text-xs">
               {product.discount}%
             </div>
           </>
@@ -50,7 +54,7 @@ const ProductItem = ({ product }: ProductItemProps) => {
       <Button
         variant="light"
         radius="full"
-        className="bg-[#EDF4F6] group-hover:bg-green-500! group-hover:text-white font-semibold"
+        className="bg-[#EDF4F6] group-hover:bg-green-500! group-hover:text-white! font-semibold"
       >
         Add to Cart
       </Button>
@@ -58,4 +62,4 @@ const ProductItem = ({ product }: ProductItemProps) => {
   );
 };
 
-export default ProductItem;
+export default React.memo(ProductItem);

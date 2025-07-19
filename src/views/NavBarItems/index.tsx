@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import Department from './components/Department';
 import OurStore from './components/OurStore';

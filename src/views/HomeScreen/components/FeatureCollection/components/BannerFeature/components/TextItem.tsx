@@ -22,7 +22,7 @@ const TextItem = ({
     <div className={`${className} flex h-full flex-col justify-center gap-2`}>
       {titleSmall && <span className="text-sm font-medium text-gray-600">{titleSmall}</span>}
       {flatSell && (
-        <span className="text-sm font-semibold text-white bg-orange-500 rounded-full w-fit px-3 py-1">
+        <span className="text-sm font-semibold text-white! bg-orange-500 rounded-full w-fit px-3 py-1">
           {flatSell}
         </span>
       )}

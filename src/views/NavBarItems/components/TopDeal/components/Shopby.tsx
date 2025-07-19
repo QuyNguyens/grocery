@@ -2,7 +2,7 @@ import { Image } from '@heroui/image';
 import { products } from 'constants/product';
 import React from 'react';
 
-const Shopby = () => {
+const ShopBy = () => {
   return (
     <div className="p-4 flex-1">
       <h3 className="text-[16px] text-center text-gray-700 font-semibold">Shop by</h3>
@@ -28,4 +28,4 @@ const Shopby = () => {
   );
 };
 
-export default Shopby;
+export default ShopBy;

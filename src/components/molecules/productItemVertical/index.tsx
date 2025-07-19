@@ -1,16 +1,19 @@
+'use client';
 import { Image } from '@heroui/image';
 import StarRatings from 'react-star-ratings';
-import { Product } from '../../Special/components/ProductItem';
+import { Product } from '../productItem';
+import React from 'react';
 
-type ProductItemProps = {
+type ProductItemVerticalProps = {
   product: Product;
+  isBorderImage?: boolean;
 };
 
-const Items = ({ product }: ProductItemProps) => {
+const ProductItemVertical = ({ product, isBorderImage }: ProductItemVerticalProps) => {
   return (
     <div className="flex items-center gap-2 group p-2 bg-white rounded-lg">
       <Image
-        className="rounded-lg"
+        className={`${isBorderImage ? 'border border-gray-200' : ''} rounded-lg `}
         alt="product"
         src={product.image?.toString()}
         width={80}
@@ -32,10 +35,10 @@ const Items = ({ product }: ProductItemProps) => {
           {product.discount ? (
             <>
               <span className="line-through text-gray-500">${product.price}.00</span>
-              <span className="text-red-500 font-semibold">
+              <span className="text-red-500! font-semibold">
                 ${Math.ceil(product.price - (product.price * product.discount) / 100)}.00
               </span>
-              <div className="px-1.5 py-0.5 bg-green-500 rounded-lg font-bold text-white flex items-center justify-center text-xs">
+              <div className="px-1.5 py-0.5 bg-green-500 rounded-lg font-bold text-white! flex items-center justify-center text-xs">
                 {product.discount}%
               </div>
             </>
@@ -48,4 +51,4 @@ const Items = ({ product }: ProductItemProps) => {
   );
 };
 
-export default Items;
+export default React.memo(ProductItemVertical);

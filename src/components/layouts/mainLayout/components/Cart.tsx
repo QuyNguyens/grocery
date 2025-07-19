@@ -22,10 +22,10 @@ const Cart = () => {
             <span className="text-xs">Cart</span>
             <AmountCart amount={0} />
           </div>
-          <span className="font-bold">$0.00</span>
+          <span className="font-bold text-[#184363]">$0.00</span>
         </div>
       </div>
-      <DrawerCart isOpen={isOpen} onOpenChange={onOpenChange}/>
+      <DrawerCart isOpen={isOpen} onOpenChange={onOpenChange} />
     </>
   );
 };

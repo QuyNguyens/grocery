@@ -20,10 +20,10 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
             style={{ backgroundImage: `url(${LoginImage.src})` }}
           >
             <div className="flex flex-col gap-4 px-5 pt-5">
-              <h1 className="text-white font-bold lg:text-3xl xl:text-5xl lg:leading-8 xl:leading-14">
+              <h1 className="text-white! font-bold lg:text-3xl xl:text-5xl lg:leading-8 xl:leading-14">
                 Simplify shopping online with our grocery store.
               </h1>
-              <span className="text-white text-sm font-medium">
+              <span className="text-white! text-sm font-medium">
                 Simplify your grocery store management with our user-friendly admin dashboard.
               </span>
             </div>
