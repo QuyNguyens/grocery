@@ -1,8 +1,6 @@
-'use client';
-
 import { Avatar } from '@heroui/react';
+import ClientStarRatings from 'components/molecules/clientStarRating';
 import React from 'react';
-import StarRatings from 'react-star-ratings';
 import { RatingCustomerType } from 'types/ratingCustomer';
 
 export type RatingItemProps = {
@@ -12,7 +10,7 @@ export type RatingItemProps = {
 const RatingItem = ({ ratingCustomer }: RatingItemProps) => {
   return (
     <div className="flex flex-col items-center justify-center gap-4 bg-white p-8 rounded-2xl">
-      <StarRatings
+      <ClientStarRatings
         rating={ratingCustomer.rating}
         starRatedColor="#f2971f"
         starEmptyColor="#d1d5db"

@@ -1,13 +1,13 @@
-'use client';
-
 import { Button } from '@heroui/button';
 import { Image } from '@heroui/image';
 import StarRatings from 'react-star-ratings';
 import React from 'react';
+import ClientStarRatings from '../clientStarRating';
 
 export interface Product {
   image: React.ReactNode;
   description: string;
+  title: string;
   rating: number;
   price: number;
   discount: number;
@@ -20,15 +20,18 @@ type ProductItemProps = {
 };
 
 const ProductItem = ({ product }: ProductItemProps) => {
+  console.log('re-render');
+
   return (
     <div className="flex flex-col gap-2 group">
       <Image
-        className="border border-gray-300 rounded-lg"
+        className="w-full border border-gray-300 rounded-lg overflow-hidden"
         alt="product"
         src={product.image?.toString()}
       />
       <p className="font-semibold text-sm line-clamp-2">{product.description}</p>
-      <StarRatings
+
+      <ClientStarRatings
         rating={product.rating}
         starRatedColor="#facc15"
         starEmptyColor="#d1d5db"

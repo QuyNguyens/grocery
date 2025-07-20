@@ -4,22 +4,19 @@ import React from 'react';
 
 const CatalogItems = () => {
   return (
-    /* flex-nowrap để luôn nằm 1 hàng, gap-5 để tạo khoảng cách */
     <div className="flex flex-nowrap gap-5 w-full overflow-hidden">
       {catalogItems.map((item, index) => (
         <div
           key={index}
           className="
-            shrink-0                          /* đừng co lại */
-            group bg-white rounded-xl shadow-lg
+            shrink-0 overflow-hidden                        
+            group bg-white rounded-xl shadow-xl
             flex flex-col items-center justify-center
             py-5 gap-2
-
-            /* 👇 chia đều bề rộng sau khi đã trừ gap */
-            basis-[calc((100%-1.25rem)/2)]         /* mobile: 2 items */
-            md:basis-[calc((100%-3.75rem)/4)]      /* md: 4 items */
-            lg:basis-[calc((100%-5rem)/5)]         /* lg: 5 items */
-            xl:basis-[calc((100%-6.25rem)/6)]      /* xl: 6 items */
+            basis-[calc((100%-1.25rem)/2)]       
+            md:basis-[calc((100%-3.75rem)/4)]     
+            lg:basis-[calc((100%-5rem)/5)]       
+            xl:basis-[calc((100%-6.25rem)/6)] 
           "
         >
           <Image

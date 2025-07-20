@@ -10,7 +10,7 @@ import OurProduct from './components/OurProduct';
 
 const HomeScreen = () => {
   return (
-    <div className="w-full flex flex-col items-center justify-center">
+    <div className="w-full flex flex-col items-center justify-center bg-white">
       <div className="w-full max-w-[1200px]">
         <Banner />
         <FeatureCollection />
