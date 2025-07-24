@@ -41,9 +41,9 @@ const FormLogin = () => {
       });
 
       if (res.data.success) {
-        const { accessToken, data } = res.data;
+        const { data } = res.data;
 
-        localStorage.setItem('access_token', accessToken);
+        localStorage.setItem('access_token', data?.accessToken);
         localStorage.setItem('user', JSON.stringify(data?.user));
         setUser(data?.user);
 
