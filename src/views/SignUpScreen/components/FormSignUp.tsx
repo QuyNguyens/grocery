@@ -2,11 +2,12 @@
 
 import { Button, Form, Input } from '@heroui/react';
 import { useForm } from 'react-hook-form';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { schemaSignUp } from '../Constants';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { LOGIN_WITH } from 'constants/login';
 import { useRouter } from 'next/navigation';
+import authServices from 'services/auth.service';
+import { useUserContext } from 'context/AuthContext';
 
 type FormSignUpInputs = {
   name: string;
@@ -16,8 +17,9 @@ type FormSignUpInputs = {
 };
 
 const FormSignUp = () => {
-  const [action, setAction] = useState<string>('');
+  const [error, setError] = useState<string>('');
   const router = useRouter();
+  const { setUser } = useUserContext();
 
   const {
     register,
@@ -32,10 +34,32 @@ const FormSignUp = () => {
     },
   });
 
-  const onSubmit = (data: FormSignUpInputs) => {
-    setAction(`submit ${JSON.stringify(data)}`);
-    router.push('/');
-  };
+  const onSubmit = useCallback(async (data: FormSignUpInputs) => {
+    try {
+      const res = await authServices.signup({
+        ...data,
+        email: data.email.toLowerCase(),
+      });
+
+      if (res.data.success) {
+        const { data } = res.data;
+
+        localStorage.setItem('access_token', data?.accessToken);
+        localStorage.setItem('user', JSON.stringify(data?.user));
+        setUser(data?.user);
+
+        const backUrl = localStorage.getItem('backUrl');
+        if (backUrl) {
+          localStorage.removeItem('backUrl');
+          router.push(backUrl);
+        } else {
+          router.push('/');
+        }
+      }
+    } catch (error) {
+      setError('Email đã tồn tại!!!');
+    }
+  }, []);
 
   return (
     <div className="flex flex-col gap-5">
@@ -44,7 +68,6 @@ const FormSignUp = () => {
         onSubmit={handleSubmit(onSubmit)}
         onReset={() => {
           reset();
-          setAction('reset');
         }}
       >
         <Input
@@ -70,7 +93,7 @@ const FormSignUp = () => {
           isInvalid={!!errors.email}
           errorMessage={errors.email?.message}
         />
-
+        {error && <p className="text-sm text-red-500!">{error}</p>}
         <Input
           isRequired
           label="Password"
@@ -94,7 +117,7 @@ const FormSignUp = () => {
           errorMessage={errors.passwordConfirm?.message}
         />
         <div className="w-full">
-          <Button size="lg" fullWidth color="primary" type="submit">
+          <Button className="text-white!" size="lg" fullWidth color="primary" type="submit">
             SignUp
           </Button>
         </div>

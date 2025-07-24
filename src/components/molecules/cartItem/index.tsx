@@ -14,7 +14,7 @@ const CartItem = ({ item }: CartItemProps) => {
       <div className="flex flex-1 flex-col gap-3">
         <div className="flex w-full items-start justify-between gap-5">
           <p className="font-bold text-sm hover:text-green-500">{item.description}</p>
-          <TrashIcon className="w-6 h-6 text-red-500" />
+          <TrashIcon className="w-6 h-6 text-red-500!" />
         </div>
         <span className="text-gray-600 ml-4 text-xs">X ${item.amount}.00</span>
         <span className="text-gray-600 text-xs">Weight: {item.weight}kg</span>

@@ -1,6 +1,7 @@
 import React from 'react';
-import Items from './Items';
-import { Product } from '../../Special/components/ProductItem';
+import { Product } from '../productItem';
+import ProductItemVertical from '../productItemVertical';
+
 type CatalogProps = {
   products: Product[];
   title: string;
@@ -12,7 +13,7 @@ const Catalog = ({ products, title }: CatalogProps) => {
       <div className="mt-4 flex flex-wrap overflow-y-auto h-[400px]">
         {products.map((product, index) => (
           <div key={index} className="p-2 w-1/2">
-            <Items product={product} />
+            <ProductItemVertical product={product} imageSize={70} />
           </div>
         ))}
       </div>
@@ -20,4 +21,4 @@ const Catalog = ({ products, title }: CatalogProps) => {
   );
 };
 
-export default Catalog;
+export default React.memo(Catalog);

@@ -34,8 +34,8 @@ const SearchBox = () => {
           onChange={(e: any) => setInputValue(e.target.value)}
           className="border-none outline-none focus:outline-none focus:border-none"
         />
-        <div className="flex items-center justify-center px-4 py-2 bg-green-600 text-white">
-          <span className="font-bold">Search</span>
+        <div className="flex items-center justify-center px-4 py-2 bg-green-600 text-white!">
+          <span className="font-bold text-white!">Search</span>
         </div>
       </div>
 

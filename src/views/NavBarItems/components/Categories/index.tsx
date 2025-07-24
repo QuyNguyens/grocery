@@ -1,7 +1,7 @@
 import React from 'react';
 import Items from '../OurStore/components/Items';
-import Catalog from './components/Catalog';
 import { products } from 'constants/product';
+import Catalog from 'components/molecules/catalog';
 
 const Categories = () => {
   return (

@@ -2,11 +2,13 @@
 
 import { Button, Form, Image, Input } from '@heroui/react';
 import { useForm } from 'react-hook-form';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { schemaLogin } from '../Constants';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { LOGIN_WITH } from 'constants/login';
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
+import authServices from 'services/auth.service';
+import { useUserContext } from 'context/AuthContext';
 
 type LoginFormInputs = {
   email: string;
@@ -14,7 +16,8 @@ type LoginFormInputs = {
 };
 
 const FormLogin = () => {
-  const [action, setAction] = useState<string>('');
+  const { setUser } = useUserContext();
+  const [error, setError] = useState<string>('');
   const router = useRouter();
 
   const {
@@ -30,10 +33,32 @@ const FormLogin = () => {
     },
   });
 
-  const onSubmit = (data: LoginFormInputs) => {
-    setAction(`submit ${JSON.stringify(data)}`);
-    router.push('/');
-  };
+  const onSubmit = useCallback(async (data: LoginFormInputs) => {
+    try {
+      const res = await authServices.login({
+        ...data,
+        email: data.email.toLowerCase(),
+      });
+
+      if (res.data.success) {
+        const { data } = res.data;
+
+        localStorage.setItem('access_token', data?.accessToken);
+        localStorage.setItem('user', JSON.stringify(data?.user));
+        setUser(data?.user);
+
+        const backUrl = localStorage.getItem('backUrl');
+        if (backUrl) {
+          localStorage.removeItem('backUrl');
+          router.push(backUrl);
+        } else {
+          router.push('/');
+        }
+      }
+    } catch (error) {
+      setError('Email hoặc mật khẩu không chính xác!!!');
+    }
+  }, []);
 
   return (
     <div className="flex flex-col gap-5">
@@ -42,7 +67,7 @@ const FormLogin = () => {
         onSubmit={handleSubmit(onSubmit)}
         onReset={() => {
           reset();
-          setAction('reset');
+          setError('');
         }}
       >
         <Input
@@ -68,14 +93,21 @@ const FormLogin = () => {
           isInvalid={!!errors.password}
           errorMessage={errors.password?.message}
         />
-        <div className="flex justify-end w-full">
+        <div className="flex justify-between items-center w-full">
+          {error ? <p className="text-sm text-red-500!">{error}</p> : <p> </p>}
           <p className="text-xs text-gray-500 hover:underline">forgot password?</p>
         </div>
         <div className="flex w-full gap-2">
-          <Button size="lg" fullWidth color="primary" type="submit">
+          <Button
+            className="text-white! font-semibold"
+            size="lg"
+            fullWidth
+            color="primary"
+            type="submit"
+          >
             Submit
           </Button>
-          <Button size="lg" fullWidth type="reset" variant="flat">
+          <Button className="font-semibold" size="lg" fullWidth type="reset" variant="flat">
             Reset
           </Button>
         </div>
@@ -90,7 +122,8 @@ const FormLogin = () => {
       <div className="flex flex-col gap-2">
         {LOGIN_WITH.map((item, index) => (
           <Button
-            className="bg-white border border-gray-300 rounded-2xl"
+            className="bg-white border border-gray-300 rounded-2xl font-medium"
+            onClick={() => redirect(item.url)}
             key={index}
             startContent={<img src={item.icon.src} alt="icon" className="w-6 h-6 object-contain" />}
             size="lg"

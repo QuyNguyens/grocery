@@ -6,11 +6,11 @@ import {
   DrawerBody,
   DrawerFooter,
   Button,
-  Image,
   Divider,
 } from '@heroui/react';
-import { TrashIcon } from '@heroicons/react/24/outline';
 import CartItem from 'components/molecules/cartItem';
+import { useRouter } from 'next/navigation';
+import { ROUTES } from 'constants/routes';
 
 type DrawerCartProps = {
   isOpen: boolean;
@@ -18,12 +18,14 @@ type DrawerCartProps = {
 };
 
 const DrawerCart = ({ isOpen, onOpenChange }: DrawerCartProps) => {
+  const router = useRouter();
+
   return (
     <Drawer isOpen={isOpen} onOpenChange={onOpenChange}>
       <DrawerContent>
         {(onClose) => (
           <>
-            <DrawerHeader className="flex flex-col gap-1 bg-green-500 text-white">
+            <DrawerHeader className="flex flex-col gap-1 bg-green-500 text-white!">
               <span className="ml-4 text-sm">Your Shopping Cart</span>
             </DrawerHeader>
             <DrawerBody className="mt-5 px-4 flex flex-col gap-1">
@@ -50,25 +52,27 @@ const DrawerCart = ({ isOpen, onOpenChange }: DrawerCartProps) => {
             <DrawerFooter className="bg-[#EDF4F6] px-0 py-0 flex flex-col">
               <div className="flex w-full items-center justify-between px-4 py-4 border-b border-gray-300">
                 <div className="flex flex-col gap-1">
-                  <span className="text-sm font-bold">Total Item</span>
+                  <span className="text-sm font-bold text-[#184363]">Total Item</span>
                   <span>2</span>
                 </div>
                 <div className="flex flex-col gap-1">
-                  <span className="text-sm font-bold">Subtotal</span>
+                  <span className="text-sm font-bold text-[#184363]">Subtotal</span>
                   <span>$50.00</span>
                 </div>
               </div>
               <div className="flex mx-4 my-3 gap-3">
                 <Button
+                  onClick={() => router.push(ROUTES.cart)}
                   fullWidth
                   radius="full"
-                  className="text-white font-bold bg-green-500 hover:bg-green-600"
+                  className="text-white! font-bold bg-green-500 hover:bg-green-600"
                   onPress={onClose}
                 >
                   ViewCart
                 </Button>
                 <Button
-                  className="font-bold"
+                  onClick={() => router.push(ROUTES.checkout)}
+                  className="font-bold text-white!"
                   fullWidth
                   radius="full"
                   color="primary"

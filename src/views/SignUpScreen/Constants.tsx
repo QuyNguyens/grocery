@@ -11,6 +11,7 @@ export const schemaSignUp = yup
     password: yup
       .string()
       .required('Bắt buộc phải nhập mật khẩu')
+      .min(6, 'Mật khẩu ít nhất 6 ký tự')
       .matches(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
         'Vui lòng nhập mật khẩu hợp lệ',

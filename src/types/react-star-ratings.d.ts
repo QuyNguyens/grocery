@@ -1,7 +1,7 @@
 declare module 'react-star-ratings' {
   import * as React from 'react';
 
-  interface StarRatingsProps {
+  export interface StarRatingsProps {
     rating: number;
     numberOfStars?: number;
     changeRating?: (newRating: number) => void;
