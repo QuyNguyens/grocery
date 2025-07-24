@@ -15,7 +15,6 @@ const ColorFilter = () => {
     [color],
   );
 
-  console.log('color: ', color);
   return (
     <div className="flex gap-2">
       {COLORS_FILTER.map((item, index) => (

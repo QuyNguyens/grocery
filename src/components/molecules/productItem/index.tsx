@@ -1,6 +1,5 @@
 import { Button } from '@heroui/button';
 import { Image } from '@heroui/image';
-import StarRatings from 'react-star-ratings';
 import React from 'react';
 import ClientStarRatings from '../clientStarRating';
 
@@ -11,7 +10,7 @@ export interface Product {
   rating: number;
   price: number;
   discount: number;
-
+  sku: string;
   name: string;
 }
 
@@ -20,8 +19,6 @@ type ProductItemProps = {
 };
 
 const ProductItem = ({ product }: ProductItemProps) => {
-  console.log('re-render');
-
   return (
     <div className="flex flex-col gap-2 group">
       <Image

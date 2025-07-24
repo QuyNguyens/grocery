@@ -6,6 +6,16 @@ import Juice from '../../public/images/juice.png';
 import Bakery from '../../public/images/bakery.png';
 import { Product } from 'components/molecules/productItem';
 
+export interface CartItem {
+  image: string;
+  type: string;
+  name: string;
+  price: number;
+  discount: number;
+  weight: number;
+  quantity: number;
+}
+
 export const products: Product[] = [
   {
     image: 'https://demo-grocy-01.myshopify.com/cdn/shop/files/23_02.jpg?v=1719656318&width=360',
@@ -14,6 +24,7 @@ export const products: Product[] = [
     description: 'Egg Kinder Milk Chocolate Surprise with toy 20g',
     rating: 4,
     name: 'Beverages',
+    sku: '452SD551fFS56A',
     price: 20,
     discount: 0,
   },
@@ -24,6 +35,7 @@ export const products: Product[] = [
     description: 'Papaya (Each) (Approx. 500 g - 3500 g)',
     rating: 4,
     name: 'Fruits',
+    sku: '452SD551fFS56A',
     price: 20,
     discount: 20,
   },
@@ -34,6 +46,7 @@ export const products: Product[] = [
     description: 'Coconut Kalash 5 pcs (Pack) (Approx 1600 g - 2000 g)',
     rating: 3,
     name: 'Ice Cream',
+    sku: '452SD551fFS56A',
     price: 47,
     discount: 0,
   },
@@ -44,6 +57,7 @@ export const products: Product[] = [
     description: 'Indian Garlic 200 g(Approx 750 g - 6000 g)',
     rating: 3,
     name: 'Cream',
+    sku: '452SD551fFS56A',
     price: 20,
     discount: 25,
   },
@@ -54,6 +68,7 @@ export const products: Product[] = [
     description: 'Cake world chocolate Toast Bake & Go',
     rating: 4,
     name: 'Vegetables',
+    sku: '452SD551fFS56A',
     price: 45,
     discount: 29,
   },
@@ -64,6 +79,7 @@ export const products: Product[] = [
     description: 'Egg Kinder Milk Chocolate Surprise with toy 20g',
     rating: 4,
     name: 'Honey',
+    sku: '452SD551fFS56A',
     price: 20,
     discount: 15,
   },
@@ -74,6 +90,7 @@ export const products: Product[] = [
     description: 'Monterra Jumbo California Walnuts in Shell 1 kg',
     rating: 4,
     name: 'Potatos',
+    sku: '452SD551fFS56A',
     price: 32,
     discount: 19,
   },
@@ -84,6 +101,7 @@ export const products: Product[] = [
     description: 'Jacobs Monarch Instant Coffee, 47.5g (Pack Of 2)',
     rating: 3,
     name: 'Palak',
+    sku: '452SD551fFS56A',
     price: 35,
     discount: 20,
   },
@@ -94,6 +112,7 @@ export const products: Product[] = [
     description: 'Meishi Authentic Hoisin Cantonese Hoisin Sauce',
     rating: 4,
     name: 'Chips',
+    sku: '452SD551fFS56A',
     price: 35,
     discount: 14,
   },
@@ -123,5 +142,80 @@ export const catalogItems: any[] = [
   {
     image: Bakery.src,
     name: 'Bakery',
+  },
+];
+
+export const CART_ITEMS: CartItem[] = [
+  {
+    image: 'https://demo-grocy-01.myshopify.com/cdn/shop/files/23_02.jpg?v=1719656318&width=360',
+    type: 'Agama',
+    name: 'Zoo Med Large Sun-Dried Red Shrimp Agama',
+    price: 80,
+    discount: 20,
+    weight: 1,
+    quantity: 2,
+  },
+  {
+    image: 'https://demo-grocy-01.myshopify.com/cdn/shop/files/22_02.jpg?v=1719656309&width=360',
+    type: 'Fruits',
+    name: 'Papaya (Each) (Approx. 500 g - 3500 g)',
+    price: 16,
+    discount: 0,
+    weight: 0,
+    quantity: 1,
+  },
+  {
+    image: 'https://demo-grocy-01.myshopify.com/cdn/shop/files/21_02.jpg?v=1719656298&width=360',
+    type: 'Vegetable',
+    name: 'Amaranthus 1 Bunch (Approx 160 g - 1500 g)',
+    price: 30,
+    discount: 0,
+    weight: 1,
+    quantity: 2,
+  },
+  {
+    image: 'https://demo-grocy-01.myshopify.com/cdn/shop/files/09_02.jpg?v=1719656169&width=360',
+    type: 'Vegetable',
+    name: 'Potato per kg (Approx. 950 g - 1000 g)',
+    price: 50,
+    discount: 10,
+    weight: 1,
+    quantity: 1,
+  },
+  {
+    image: 'https://demo-grocy-01.myshopify.com/cdn/shop/files/23_02.jpg?v=1719656318&width=360',
+    type: 'Agama',
+    name: 'Zoo Med Large Sun-Dried Red Shrimp Agama',
+    price: 80,
+    discount: 20,
+    weight: 1,
+    quantity: 2,
+  },
+  {
+    image: 'https://demo-grocy-01.myshopify.com/cdn/shop/files/22_02.jpg?v=1719656309&width=360',
+    type: 'Fruits',
+    name: 'Papaya (Each) (Approx. 500 g - 3500 g)',
+    price: 16,
+    discount: 0,
+    weight: 0,
+    quantity: 1,
+  },
+  {
+    image: 'https://demo-grocy-01.myshopify.com/cdn/shop/files/21_02.jpg?v=1719656298&width=360',
+    type: 'Vegetable',
+    name: 'Amaranthus 1 Bunch (Approx 160 g - 1500 g)',
+    price: 30,
+    discount: 0,
+    weight: 1,
+    quantity: 2,
+  },
+  {
+    image: 'https://demo-grocy-01.myshopify.com/cdn/shop/files/09_02.jpg?v=1719656169&width=360',
+    type: 'Vegetable',
+    name: 'Potato per kg (Approx. 950 g - 1000 g)',
+    price: 50,
+    discount: 10,
+    weight: 1,
+    quantity: 1,
   },
 ];

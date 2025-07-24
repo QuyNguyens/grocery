@@ -9,7 +9,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
   const isLoginPage = pathname.includes(ROUTES.login);
   const isSignupPage = pathname.includes(ROUTES.signup);
   const isResetPassword =
-    pathname.includes(ROUTES.resetpassword) || pathname.includes(ROUTES.forgotpassword);
+    pathname.includes(ROUTES.resetPassword) || pathname.includes(ROUTES.forgotPassword);
 
   return (
     <main className="p-5 md:p-20 xl:p-36 h-[100vh] py-5 md:py-8 xl:py-12 bg-gray-300">

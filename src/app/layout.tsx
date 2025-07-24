@@ -5,6 +5,7 @@ import { HeroUIProvider } from '@heroui/react';
 import { SeoProvider } from 'context/SeoContext';
 import { SeoUpdater } from 'components/molecules/seoUpdater';
 import InitLayout from 'components/layouts/initLayout';
+import { UserProvider } from 'context/AuthContext';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -32,7 +33,9 @@ export default function RootLayout({
         <SeoProvider>
           <SeoUpdater />
           <HeroUIProvider>
-            <InitLayout>{children}</InitLayout>
+            <UserProvider>
+              <InitLayout>{children}</InitLayout>
+            </UserProvider>
           </HeroUIProvider>
         </SeoProvider>
       </body>

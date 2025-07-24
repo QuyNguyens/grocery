@@ -6,11 +6,11 @@ import {
   DrawerBody,
   DrawerFooter,
   Button,
-  Image,
   Divider,
 } from '@heroui/react';
-import { TrashIcon } from '@heroicons/react/24/outline';
 import CartItem from 'components/molecules/cartItem';
+import { useRouter } from 'next/navigation';
+import { ROUTES } from 'constants/routes';
 
 type DrawerCartProps = {
   isOpen: boolean;
@@ -18,6 +18,8 @@ type DrawerCartProps = {
 };
 
 const DrawerCart = ({ isOpen, onOpenChange }: DrawerCartProps) => {
+  const router = useRouter();
+
   return (
     <Drawer isOpen={isOpen} onOpenChange={onOpenChange}>
       <DrawerContent>
@@ -60,6 +62,7 @@ const DrawerCart = ({ isOpen, onOpenChange }: DrawerCartProps) => {
               </div>
               <div className="flex mx-4 my-3 gap-3">
                 <Button
+                  onClick={() => router.push(ROUTES.cart)}
                   fullWidth
                   radius="full"
                   className="text-white! font-bold bg-green-500 hover:bg-green-600"
@@ -68,6 +71,7 @@ const DrawerCart = ({ isOpen, onOpenChange }: DrawerCartProps) => {
                   ViewCart
                 </Button>
                 <Button
+                  onClick={() => router.push(ROUTES.checkout)}
                   className="font-bold text-white!"
                   fullWidth
                   radius="full"

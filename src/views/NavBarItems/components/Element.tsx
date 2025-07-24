@@ -11,12 +11,12 @@ export default function Element() {
         </button>
       </DropdownTrigger>
       <DropdownMenu aria-label="Static Actions">
-        <DropdownItem key="new">About Us</DropdownItem>
-        <DropdownItem key="copy">Blogs</DropdownItem>
-        <DropdownItem key="copy">Contact</DropdownItem>
-        <DropdownItem key="copy">FAQs</DropdownItem>
-        <DropdownItem key="copy">Compare</DropdownItem>
-        <DropdownItem key="copy">Wishlist</DropdownItem>
+        <DropdownItem key="about-us">About Us</DropdownItem>
+        <DropdownItem key="blogs">Blogs</DropdownItem>
+        <DropdownItem key="contact">Contact</DropdownItem>
+        <DropdownItem key="faqs">FAQs</DropdownItem>
+        <DropdownItem key="compare">Compare</DropdownItem>
+        <DropdownItem key="whish-list">Wishlist</DropdownItem>
       </DropdownMenu>
     </Dropdown>
   );
