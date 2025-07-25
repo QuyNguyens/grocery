@@ -3,6 +3,8 @@ import { useCallback } from 'react';
 import { LAYOUT_CONFIG } from './layout-config';
 import { usePathname } from 'next/navigation';
 import MainLayout from '../mainLayout';
+import { Provider } from 'react-redux';
+import { store } from 'stores/store';
 
 export default function InitLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const pathname = usePathname();
@@ -22,5 +24,9 @@ export default function InitLayout({ children }: Readonly<{ children: React.Reac
     return <MainLayout>{children}</MainLayout>;
   }, [children, pathname]);
 
-  return <>{renderLayout()}</>;
+  return (
+    <>
+      <Provider store={store}>{renderLayout()}</Provider>
+    </>
+  );
 }

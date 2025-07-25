@@ -8,3 +8,12 @@ export interface User {
   role: string;
   address?: DeliveryAddress[];
 }
+
+export interface MetaCommon {
+  currentPage: number;
+  totalPages: number;
+  totalItems: number;
+  limit: number;
+  isLoading: boolean;
+  error: string | null;
+}
