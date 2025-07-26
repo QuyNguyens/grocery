@@ -1,10 +1,4 @@
 import {
-  Drawer,
-  DrawerContent,
-  DrawerHeader,
-  DrawerBody,
-  DrawerFooter,
-  Button,
   useDisclosure,
 } from '@heroui/react';
 import { ShoppingCartIcon } from '@heroicons/react/24/outline';
@@ -25,7 +19,7 @@ const Cart = () => {
       return pathname === ROUTES.cart ? undefined : onOpen();
     }
     router.push('/login');
-  }, []);
+  }, [router]);
 
   return (
     <>

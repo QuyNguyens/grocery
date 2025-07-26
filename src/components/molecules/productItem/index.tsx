@@ -1,35 +1,31 @@
 import { Button } from '@heroui/button';
 import { Image } from '@heroui/image';
-import React from 'react';
+import React, { useCallback } from 'react';
 import ClientStarRatings from '../clientStarRating';
-
-export interface Product {
-  image: React.ReactNode;
-  description: string;
-  title: string;
-  rating: number;
-  price: number;
-  discount: number;
-  sku: string;
-  name: string;
-}
+import { Product } from 'types/product';
+import { useRouter } from 'next/navigation';
 
 type ProductItemProps = {
   product: Product;
 };
 
 const ProductItem = ({ product }: ProductItemProps) => {
+  const router = useRouter();
+
   return (
-    <div className="flex flex-col gap-2 group">
+    <div
+      onClick={() => router.push(`/products/${product._id}`)}
+      className="flex flex-col gap-2 group"
+    >
       <Image
         className="w-full border border-gray-300 rounded-lg overflow-hidden"
         alt="product"
-        src={product.image?.toString()}
+        src={product?.images[0].toString()}
       />
       <p className="font-semibold text-sm line-clamp-2">{product.description}</p>
 
       <ClientStarRatings
-        rating={product.rating}
+        rating={product?.rating || 0}
         starRatedColor="#facc15"
         starEmptyColor="#d1d5db"
         numberOfStars={5}
@@ -39,16 +35,17 @@ const ProductItem = ({ product }: ProductItemProps) => {
       <div className="flex gap-2">
         {product.discount ? (
           <>
-            <span className="line-through text-gray-500">${product.price}.00</span>
+            <span className="line-through text-gray-500">${product.basePrice}.00</span>
             <span className="text-red-500! font-semibold">
-              ${Math.ceil(product.price - (product.price * product.discount) / 100)}.00
+              ${Math.ceil(product.basePrice - (product.basePrice * product.discount.value) / 100)}
+              .00
             </span>
             <div className="px-1.5 py-0.5 bg-green-500 rounded-lg font-bold text-white! flex items-center justify-center text-xs">
-              {product.discount}%
+              {product.discount.value}%
             </div>
           </>
         ) : (
-          <span className=" text-gray-500">${product.price}.00</span>
+          <span className=" text-gray-500">${product.basePrice}.00</span>
         )}
       </div>
       <Button

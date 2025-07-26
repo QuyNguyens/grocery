@@ -20,7 +20,7 @@ const ItemsFilter = () => {
                 aria-label={filter.title}
                 title={filter.title}
               >
-                <ColorFilter />
+                <ColorFilter colors={['green', 'blue', 'pink', 'brown', 'yellow', 'orange']}/>
               </AccordionItem>
             );
           }

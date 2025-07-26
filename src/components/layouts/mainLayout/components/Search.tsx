@@ -31,7 +31,7 @@ const SearchBox = () => {
           radius="none"
           value={inputValue}
           onFocus={() => setIsFocused(true)}
-          onChange={(e: any) => setInputValue(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setInputValue(e.target.value)}
           className="border-none outline-none focus:outline-none focus:border-none"
         />
         <div className="flex items-center justify-center px-4 py-2 bg-green-600 text-white!">

@@ -2,9 +2,10 @@
 
 import React, { useEffect, useState } from 'react';
 import ProductItemVertical from 'components/molecules/productItemVertical';
-import ProductItem, { Product } from 'components/molecules/productItem';
+import ProductItem from 'components/molecules/productItem';
 import ItemsFilter from './componens/ItemsFilter';
 import ProductDisplay from './componens/ProductDisplay';
+import { Product } from 'types/product';
 
 type ProductFilterProps = {
   products: Product[];

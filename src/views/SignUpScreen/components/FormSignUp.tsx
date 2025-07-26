@@ -9,7 +9,7 @@ import { useRouter } from 'next/navigation';
 import authServices from 'services/auth.service';
 import { useUserContext } from 'context/AuthContext';
 
-type FormSignUpInputs = {
+export type FormSignUpInputs = {
   name: string;
   email: string;
   password: string;

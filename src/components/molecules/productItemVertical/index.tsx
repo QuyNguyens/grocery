@@ -1,9 +1,10 @@
 import { Image } from '@heroui/image';
-import { Product } from '../productItem';
 import React from 'react';
 import ClientStarRatings from '../clientStarRating';
 import { Button } from '@heroui/button';
 import { useResponsiveBreakpoint } from 'hooks/useResponsiveBreakpoint';
+import { Product } from 'types/product';
+import { useRouter } from 'next/navigation';
 
 type ProductItemVerticalProps = {
   product: Product;
@@ -28,14 +29,18 @@ const ProductItemVertical = ({
       : breakpoint === 'md'
         ? 130
         : imageSize;
+
+  const router = useRouter();
+
   return (
     <div
+      onClick={() => router.push(`/products/${product._id}`)}
       className={`flex items-center ${isAddToCart ? 'gap-5' : 'gap-2'} group p-2 bg-white rounded-lg group`}
     >
       <Image
         className={`${isBorderImage ? 'border border-gray-200' : ''} rounded-lg`}
         alt="product"
-        src={product.image?.toString()}
+        src={product.images[0].toString()}
         width={imageWidth}
         height={imageWidth}
       />
@@ -44,7 +49,7 @@ const ProductItemVertical = ({
           {product.description}
         </p>
         <ClientStarRatings
-          rating={product.rating}
+          rating={product?.rating || 0}
           starRatedColor="#facc15"
           starEmptyColor="#d1d5db"
           numberOfStars={5}
@@ -52,21 +57,22 @@ const ProductItemVertical = ({
           starSpacing="2px"
         />
         {isTitle && (
-          <p className="text-sm leading-6 line-clamp-2 sm:line-clamp-4">{product.title}</p>
+          <p className="text-sm leading-6 line-clamp-2 sm:line-clamp-4">{product.description}</p>
         )}
         <div className="flex gap-2">
           {product.discount ? (
             <>
-              <span className="line-through text-gray-500">${product.price}.00</span>
+              <span className="line-through text-gray-500">${product.basePrice}.00</span>
               <span className="text-red-500! font-semibold">
-                ${Math.ceil(product.price - (product.price * product.discount) / 100)}.00
+                ${Math.ceil(product.basePrice - (product.basePrice * product.discount.value) / 100)}
+                .00
               </span>
               <div className="px-1.5 py-0.5 bg-green-500 rounded-lg font-bold text-white! flex items-center justify-center text-xs">
-                {product.discount}%
+                {product.discount.value}%
               </div>
             </>
           ) : (
-            <span className=" text-gray-500">${product.price}.00</span>
+            <span className=" text-gray-500">${product.basePrice}.00</span>
           )}
         </div>
         {isAddToCart && (

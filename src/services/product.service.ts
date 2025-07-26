@@ -1,8 +1,9 @@
 import { PREFIX_SERVICES } from 'constants/service';
 import axiosInstance from './axiosInstance';
+import { Product } from 'types/product';
 
 const productServices = {
-  create: async (params: any) => {
+  create: async (params: Product) => {
     return axiosInstance.post(PREFIX_SERVICES.product_service, '/create', params);
   },
   get: async (categoryId: string, page: number = 1, limit: number = 10) => {
@@ -15,11 +16,11 @@ const productServices = {
     collectionKey: string,
     page: number = 1,
     limit: number = 10,
-    categoryId: string = '',
+    name: string = '',
   ) => {
     return axiosInstance.get(
       PREFIX_SERVICES.product_service,
-      `/${collectionKey}?categoryId=${categoryId}&page=${page}&limit=${limit}`,
+      `/${collectionKey}?name=${name}&page=${page}&limit=${limit}`,
     );
   },
 };

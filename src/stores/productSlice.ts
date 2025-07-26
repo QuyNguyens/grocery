@@ -19,14 +19,14 @@ interface FetchProductsParams {
   collectionKey: string;
   page?: number;
   limit?: number;
-  categoryId: string;
+  name: string;
 }
 
 export const fetchProductsByCollection = createAsyncThunk(
   'product/fetchProductsByCollection',
-  async ({ collectionKey, page = 1, limit = 10, categoryId }: FetchProductsParams, thunkAPI) => {
+  async ({ collectionKey, page = 1, limit = 10, name }: FetchProductsParams, thunkAPI) => {
     try {
-      const response = await productServices.fetchProductsByCollection(collectionKey, page, limit, categoryId);
+      const response = await productServices.fetchProductsByCollection(collectionKey, page, limit, name);
       const { data, meta } = response.data;
 
       return {

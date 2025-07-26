@@ -3,8 +3,8 @@ import ImagesSlider from 'components/molecules/imagesSlider';
 import React from 'react';
 
 type ImageSliderProps = {
-  imageMain: string;
-  setImageMain: React.Dispatch<React.SetStateAction<string>>;
+  imageMain: number;
+  setImageMain: React.Dispatch<React.SetStateAction<number>>;
   images: string[];
 };
 
@@ -14,7 +14,7 @@ const ImageSlider = ({ imageMain, images, setImageMain }: ImageSliderProps) => {
       <Image
         className="rounded-lg border border-gray-200"
         alt="image main"
-        src={imageMain}
+        src={images[imageMain]}
         width={620}
       />
       <ImagesSlider

@@ -1,4 +1,11 @@
+import { UserRating } from './ratingCustomer';
 import { MetaCommon } from './user';
+
+interface Discount {
+  type: 'percentage' | 'fixed';
+  value: number;
+  endDate?: Date;
+}
 
 export interface Product {
   image: string;
@@ -10,10 +17,13 @@ export interface Product {
   categoryId: string;
   basePrice: number;
   images: string[];
+  discount?: Discount;
+  rating?: number;
+  sku: string;
 }
 
 export interface ProductState extends MetaCommon {
-  products: any[];
+  products: Product[];
 }
 
 export interface ProductCollectionState {
@@ -24,4 +34,29 @@ export interface ProductCollectionState {
   limit: number;
   isLoading: boolean;
   error: string | null;
+}
+
+export interface ProductVariant {
+  _id: string;
+  productId: string;
+  attributeValueIds: string[];
+  price: number;
+  currentPrice: number;
+  discount: {
+    type: 'percentage' | 'fixed';
+    value: number;
+    endDate?: Date;
+  };
+  quantity: number;
+  sku: string;
+  name?: string;
+  description?: string;
+  type?: string;
+  attribute?: string[];
+  images: string[];
+  rating?: {
+    value: number;
+    total: number;
+  };
+  userRating: UserRating[];
 }

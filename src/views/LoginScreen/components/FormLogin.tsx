@@ -10,7 +10,7 @@ import { redirect, useRouter } from 'next/navigation';
 import authServices from 'services/auth.service';
 import { useUserContext } from 'context/AuthContext';
 
-type LoginFormInputs = {
+export type LoginFormInputs = {
   email: string;
   password: string;
 };

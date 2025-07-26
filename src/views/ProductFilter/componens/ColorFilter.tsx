@@ -1,8 +1,16 @@
 import { COLORS_FILTER } from 'constants/filter';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 
-const ColorFilter = () => {
-  const [color, setColor] = useState<string>('');
+type ColorFilterProps = {
+  colors: string[];
+  color: string;
+  setColor: React.Dispatch<React.SetStateAction<string>>;
+};
+
+const ColorFilter = ({ colors, color, setColor }: ColorFilterProps) => {
+  const filteredColors = useMemo(() => {
+    return COLORS_FILTER.filter((item) => colors.includes(item.name));
+  }, [colors]);
 
   const handleClickColor = useCallback(
     (name: string) => {
@@ -17,7 +25,7 @@ const ColorFilter = () => {
 
   return (
     <div className="flex gap-2">
-      {COLORS_FILTER.map((item, index) => (
+      {filteredColors.map((item, index) => (
         <div
           onClick={() => handleClickColor(item.name)}
           key={index}

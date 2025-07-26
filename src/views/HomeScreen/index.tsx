@@ -7,25 +7,47 @@ import ShopByDepartment from './components/ShopByDepartment';
 import BestSellingProduct from './components/BestSellingProduct';
 import RatingCustomer from './components/RatingCustomer';
 import OurProduct from './components/OurProduct';
-import { useAppDispatch, useAppSelector } from 'hooks/useAppDispatch';
+import { useAppDispatch } from 'hooks/useAppDispatch';
 import { fetchProductsByCollection } from 'stores/productSlice';
+import { PRODUCT_KEY } from 'constants/product';
 
 const HomeScreen = () => {
   const dispatch = useAppDispatch();
-  const bestSelling = useAppSelector((state) => state.products.collections['categories']);
 
   useEffect(() => {
     dispatch(
       fetchProductsByCollection({
-        collectionKey: 'categories',
+        collectionKey: PRODUCT_KEY.categories,
         page: 1,
         limit: 10,
-        categoryId: '688213d424ed47805043965b',
+        name: 'Vegetables',
+      }),
+    );
+    dispatch(
+      fetchProductsByCollection({
+        collectionKey: PRODUCT_KEY.bestSelling,
+        page: 1,
+        limit: 10,
+        name: '',
+      }),
+    );
+    dispatch(
+      fetchProductsByCollection({
+        collectionKey: PRODUCT_KEY.topDeal,
+        page: 1,
+        limit: 10,
+        name: '',
+      }),
+    );
+    dispatch(
+      fetchProductsByCollection({
+        collectionKey: PRODUCT_KEY.special,
+        page: 1,
+        limit: 10,
+        name: '',
       }),
     );
   }, []);
-
-  console.log('bestSelling: ', bestSelling);
 
   return (
     <div className="w-full flex flex-col items-center justify-center bg-white">

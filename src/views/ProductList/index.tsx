@@ -1,6 +1,6 @@
 import ImageTitle from 'components/molecules/imageTitle';
-import { Product } from 'components/molecules/productItem';
 import React from 'react';
+import { Product } from 'types/product';
 
 type ProductListProps = {
   products: Product[];

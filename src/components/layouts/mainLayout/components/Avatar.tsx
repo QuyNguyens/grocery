@@ -18,12 +18,12 @@ export default function Avatar() {
   const { user, setUser } = useUserContext();
   const router = useRouter();
 
-  const handleLogout = useCallback(() => {
+  const handleLogout = () => {
     localStorage.removeItem('access_token');
     localStorage.removeItem('user');
     setUser({ _id: '', name: '', email: '', avatar: undefined, role: '', address: [] });
     router.push('/login');
-  }, []);
+  };
 
   return (
     <Dropdown>

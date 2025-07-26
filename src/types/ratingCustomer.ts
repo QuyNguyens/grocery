@@ -4,3 +4,11 @@ export interface RatingCustomerType {
   avatar: string;
   name: string;
 }
+
+export interface UserRating {
+  rating: number;
+  comment: string;
+  createdAt?: Date;
+  name: string;
+  avatar: string;
+}
