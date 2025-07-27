@@ -8,18 +8,20 @@ interface Discount {
 }
 
 export interface Product {
+  _id: string;
   image: string;
   description: string;
-  amount: number;
-  weight: number;
-  _id: string;
   name: string;
   categoryId: string;
   basePrice: number;
   images: string[];
+  attributeValueIds: string[];
   discount?: Discount;
   rating?: number;
+  totalRating: number;
   sku: string;
+  categoryType?: string;
+  categoryRefType?: string[];
 }
 
 export interface ProductState extends MetaCommon {
@@ -51,9 +53,11 @@ export interface ProductVariant {
   sku: string;
   name?: string;
   description?: string;
-  type?: string;
-  attribute?: string[];
   images: string[];
+  type?: string;
+  categoryType?: string;
+  categoryRefType?: string[];
+  attribute?: string[];
   rating?: {
     value: number;
     total: number;

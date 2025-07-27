@@ -1,18 +1,21 @@
-import {
-  useDisclosure,
-} from '@heroui/react';
+import { useDisclosure } from '@heroui/react';
 import { ShoppingCartIcon } from '@heroicons/react/24/outline';
 import AmountCart from './AmountCart';
 import DrawerCart from './DrawerCart';
 import { usePathname, useRouter } from 'next/navigation';
 import { ROUTES } from 'constants/routes';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
+import { useAppDispatch } from 'hooks/useAppDispatch';
+import { getCart } from 'stores/cartSlice';
+import { useUserContext } from 'context/AuthContext';
 
 const Cart = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const pathname = usePathname();
   const router = useRouter();
-
+  const dispatch = useAppDispatch();
+  const { user } = useUserContext();
+  
   const handleOpenCart = useCallback(() => {
     const accessToken = localStorage.getItem('access_token');
     if (accessToken) {
@@ -20,6 +23,12 @@ const Cart = () => {
     }
     router.push('/login');
   }, [router]);
+
+  useEffect(() => {
+    if (user?._id) {
+      dispatch(getCart({ userId: user._id }));
+    }
+  }, [dispatch, user]);
 
   return (
     <>

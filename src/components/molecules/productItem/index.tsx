@@ -1,6 +1,6 @@
 import { Button } from '@heroui/button';
 import { Image } from '@heroui/image';
-import React, { useCallback } from 'react';
+import React from 'react';
 import ClientStarRatings from '../clientStarRating';
 import { Product } from 'types/product';
 import { useRouter } from 'next/navigation';
@@ -24,14 +24,17 @@ const ProductItem = ({ product }: ProductItemProps) => {
       />
       <p className="font-semibold text-sm line-clamp-2">{product.description}</p>
 
-      <ClientStarRatings
-        rating={product?.rating || 0}
-        starRatedColor="#facc15"
-        starEmptyColor="#d1d5db"
-        numberOfStars={5}
-        starDimension="16px"
-        starSpacing="2px"
-      />
+      <div className="flex gap-2 items-end">
+        <ClientStarRatings
+          rating={product?.rating || 0}
+          starRatedColor="#facc15"
+          starEmptyColor="#d1d5db"
+          numberOfStars={5}
+          starDimension="16px"
+          starSpacing="2px"
+        />
+        <h6 className="text-sm">({product?.totalRating})</h6>
+      </div>
       <div className="flex gap-2">
         {product.discount ? (
           <>
@@ -48,13 +51,23 @@ const ProductItem = ({ product }: ProductItemProps) => {
           <span className=" text-gray-500">${product.basePrice}.00</span>
         )}
       </div>
-      <Button
-        variant="light"
-        radius="full"
-        className="bg-[#EDF4F6] group-hover:bg-green-500! group-hover:text-white! font-semibold"
-      >
-        Add to Cart
-      </Button>
+      {product.attributeValueIds.length > 0 ? (
+        <Button
+          variant="light"
+          radius="full"
+          className="bg-[#EDF4F6] group-hover:bg-green-500! group-hover:text-white! font-semibold"
+        >
+          Add to Cart
+        </Button>
+      ) : (
+        <Button
+          variant="light"
+          radius="full"
+          className="bg-[#EDF4F6] group-hover:bg-green-500! group-hover:text-white! font-semibold"
+        >
+          Choose Option
+        </Button>
+      )}
     </div>
   );
 };

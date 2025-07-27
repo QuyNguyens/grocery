@@ -34,7 +34,8 @@ const ItemDetail = ({ product }: ItemDetailProps) => {
         value: colorSelected != '' ? colorSelected : weightSelected != '' ? weightSelected : '',
       },
       name: product.name,
-      image: product?.images[0]
+      image: product?.images[0],
+      type: product.categoryType
     };
 
     try {
@@ -90,10 +91,21 @@ const ItemDetail = ({ product }: ItemDetailProps) => {
       <p>Shipping calculated at checkout.</p>
       <Divider />
       <p>
-        <span className="font-semibold">Type: </span>Biscuits
+        <span className="font-semibold">Type: </span>
+        {product?.categoryType}
       </p>
       <p>
         <span className="font-semibold">SKU: </span> {product.sku}
+      </p>
+      <p>
+        <span className="font-semibold">Tag: </span>
+        {product.categoryRefType &&
+          product.categoryRefType.map((item, index) => (
+            <span className="hover:underline" key={index} onClick={() => router.push(item)}>
+              {item}
+              {product?.categoryRefType && index < product.categoryRefType.length - 1 && ', '}
+            </span>
+          ))}
       </p>
       <p>
         <span className="font-semibold">Availability: </span>{' '}

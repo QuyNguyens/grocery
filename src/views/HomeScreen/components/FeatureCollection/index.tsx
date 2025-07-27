@@ -11,7 +11,6 @@ import ProductSkeleton from 'components/molecules/productSkeleton';
 const FeatureCollection = () => {
   const categories = useAppSelector((state) => state.products.collections[PRODUCT_KEY.categories]);
 
-  console.log('cate: ', categories);
   return (
     <div className="md:mt-10 lg:mt-20">
       <Title title="Featured Collection" />

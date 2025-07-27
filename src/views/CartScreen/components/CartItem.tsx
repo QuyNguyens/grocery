@@ -2,14 +2,15 @@ import { TrashIcon } from '@heroicons/react/24/outline';
 import { Button } from '@heroui/button';
 import { Image } from '@heroui/image';
 import QuantityCustom from 'components/molecules/quantityCustom';
+import { useUserContext } from 'context/AuthContext';
+import { useAppDispatch } from 'hooks/useAppDispatch';
 import React, { useEffect, useMemo, useState } from 'react';
+import { updateCartItem } from 'stores/cartSlice';
 import { CartItem as CartItemData } from 'types/cart';
 
 type CartItemProps = {
-  cartItems: CartItemData[];
   cartItem: CartItemData;
   discountedPrice: number;
-  setCartItems: React.Dispatch<React.SetStateAction<CartItemData[] | undefined>>;
 };
 
 const formatCurrency = (value: number) =>
@@ -18,18 +19,22 @@ const formatCurrency = (value: number) =>
     currency: 'USD',
   }).format(value);
 
-const CartItem = ({ discountedPrice, cartItem, cartItems, setCartItems }: CartItemProps) => {
+const CartItem = ({ discountedPrice, cartItem }: CartItemProps) => {
   const [amount, setAmount] = useState<number>(cartItem.quantity);
+  const dispatch = useAppDispatch();
+  const { user } = useUserContext();
 
   useEffect(() => {
-    setCartItems((prev) =>
-      prev?.map((item) => (item._id === cartItem._id ? { ...item, quantity: amount } : item)),
-    );
+    if (user?._id && amount !== cartItem.quantity) {
+      dispatch(
+        updateCartItem({ userId: user._id, itemId: cartItem._id, quantity: amount }),
+      );
+    }
   }, [amount]);
 
   const total = useMemo(() => {
     return discountedPrice * amount;
-  }, [amount]);
+  }, [amount, dispatch]);
   return (
     <tr className="border-t border-gray-200 hover:bg-gray-100">
       <td className="p-2">
@@ -43,7 +48,8 @@ const CartItem = ({ discountedPrice, cartItem, cartItems, setCartItems }: CartIt
       <td className="p-2">
         <div className="flex flex-col gap-1">
           <span className="text-sm text-gray-500">{cartItem.type || 'Vegetable'}</span>
-          <p className="font-semibold">{cartItem.attributesSnapshot.name}</p>
+          <p className="font-semibold text-sm">{cartItem.name}</p>
+          <p className="font-semibold text-sm">{cartItem.attributesSnapshot.name}</p>
           {cartItem.attributesSnapshot.value ? (
             <p className="text-sm text-gray-400">Weight: {cartItem.attributesSnapshot.value}</p>
           ) : null}

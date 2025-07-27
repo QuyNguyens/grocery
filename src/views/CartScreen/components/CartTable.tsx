@@ -4,10 +4,9 @@ import CartItem from './CartItem';
 
 type CartTableProps = {
   cartItems: CartItemData[];
-  setCartItems: React.Dispatch<React.SetStateAction<CartItemData[] | undefined>>;
 };
 
-const CartTable = ({ cartItems, setCartItems }: CartTableProps) => {
+const CartTable = ({ cartItems }: CartTableProps) => {
   return (
     <div className="overflow-y-auto max-h-[400px]">
       <table className="w-full text-left">
@@ -22,13 +21,14 @@ const CartTable = ({ cartItems, setCartItems }: CartTableProps) => {
           </tr>
         </thead>
         <tbody>
-          {cartItems.map((item, index) => {
-            const discountedPrice = item.discount
-              ? Math.ceil(item.price - (item.price * item.discount.value) / 100)
-              : item.price;
+          {cartItems &&
+            cartItems.map((item, index) => {
+              const discountedPrice = item.discount
+                ? Math.ceil(item.price - (item.price * item.discount.value) / 100)
+                : item.price;
 
-            return <CartItem key={index} cartItem={item} discountedPrice={discountedPrice} cartItems={cartItems} setCartItems={setCartItems}/>;
-          })}
+              return <CartItem key={index} cartItem={item} discountedPrice={discountedPrice} />;
+            })}
         </tbody>
       </table>
     </div>

@@ -9,6 +9,13 @@ const cartService = {
     );
   },
 
+  async updateCartItem(userId: string, itemId: string, quantity: number) {
+    return axiosInstance.put(
+      PREFIX_SERVICES.cart_service,
+      `/update?userId=${userId}&itemId=${itemId}&quantity=${quantity}`,
+    );
+  },
+
   async create(userId: string) {
     return axiosInstance.post(PREFIX_SERVICES.cart_service, `/create?userId=${userId}`);
   },
