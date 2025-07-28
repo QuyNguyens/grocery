@@ -26,7 +26,12 @@ export const fetchProductsByCollection = createAsyncThunk(
   'product/fetchProductsByCollection',
   async ({ collectionKey, page = 1, limit = 10, name }: FetchProductsParams, thunkAPI) => {
     try {
-      const response = await productServices.fetchProductsByCollection(collectionKey, page, limit, name);
+      const response = await productServices.fetchProductsByCollection(
+        collectionKey,
+        page,
+        limit,
+        name,
+      );
       const { data, meta } = response.data;
 
       return {
@@ -43,6 +48,18 @@ export const fetchProductsByCollection = createAsyncThunk(
         message: 'Lỗi khi lấy sản phẩm',
       });
     }
+  },
+  {
+    condition: ({ collectionKey, page = 1 }, { getState }) => {
+      const state = getState() as { products: ProductSliceState };
+      const collection = state.products.collections[collectionKey];
+
+      if (collection?.pages?.[page]) {
+        return false;
+      }
+
+      return true;
+    },
   },
 );
 
@@ -67,10 +84,25 @@ const productSlice = createSlice({
         };
       })
       .addCase(fetchProductsByCollection.fulfilled, (state, action) => {
-        const { collectionKey, products, currentPage, totalPages, totalItems, limit } = action.payload;
+        const { collectionKey, products, currentPage, totalPages, totalItems, limit } =
+          action.payload;
+
+        const existing = state.collections[collectionKey] || {
+          pages: {},
+          currentPage: 1,
+          totalPages: 0,
+          totalItems: 0,
+          limit: 10,
+          isLoading: false,
+          error: null,
+        };
 
         state.collections[collectionKey] = {
-          products,
+          ...existing,
+          pages: {
+            ...existing.pages,
+            [currentPage]: products, // ✅ Chỉ thêm trang mới
+          },
           currentPage,
           totalPages,
           totalItems,
@@ -79,6 +111,7 @@ const productSlice = createSlice({
           error: null,
         };
       })
+
       .addCase(fetchProductsByCollection.rejected, (state, action) => {
         const { collectionKey, message } = action.payload as {
           collectionKey: string;

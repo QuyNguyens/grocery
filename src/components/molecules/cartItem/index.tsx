@@ -6,6 +6,7 @@ import ModelPopup from '../modelPopup';
 import { useUserContext } from 'context/AuthContext';
 import { useAppDispatch } from 'hooks/useAppDispatch';
 import { deleteCartItem } from 'stores/cartSlice';
+import { addToast } from '@heroui/react';
 
 type CartItemProps = {
   item: CartItemData;
@@ -19,6 +20,11 @@ const CartItem = ({ item }: CartItemProps) => {
 
   const handleRemove = useCallback(async () => {
     dispatch(deleteCartItem({ userId: user?._id, itemId: item._id }));
+    addToast({
+      title: 'Giỏ hàng',
+      description: 'Đã xóa sản phẩm khỏi giỏ hàng',
+      color: 'success',
+    });
   }, [item]);
 
   return (

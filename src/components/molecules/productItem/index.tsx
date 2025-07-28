@@ -51,23 +51,14 @@ const ProductItem = ({ product }: ProductItemProps) => {
           <span className=" text-gray-500">${product.basePrice}.00</span>
         )}
       </div>
-      {product.attributeValueIds.length > 0 ? (
-        <Button
-          variant="light"
-          radius="full"
-          className="bg-[#EDF4F6] group-hover:bg-green-500! group-hover:text-white! font-semibold"
-        >
-          Add to Cart
-        </Button>
-      ) : (
-        <Button
-          variant="light"
-          radius="full"
-          className="bg-[#EDF4F6] group-hover:bg-green-500! group-hover:text-white! font-semibold"
-        >
-          Choose Option
-        </Button>
-      )}
+
+      <Button
+        variant="light"
+        radius="full"
+        className="bg-[#EDF4F6] group-hover:bg-green-500! group-hover:text-white! font-semibold"
+      >
+        Choose Option
+      </Button>
     </div>
   );
 };

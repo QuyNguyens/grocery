@@ -127,6 +127,7 @@ export const PRODUCT_KEY = {
   topDeal: 'top-deal',
   special: 'special',
   bestSelling: 'best-selling',
+  ourStore: 'our-store'
 };
 export const CATEGORY_HOME = {
   milkItems: 'Milk Items',

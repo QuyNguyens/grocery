@@ -10,7 +10,7 @@ const TopDeal = () => {
   return (
     <div className="flex">
       <ShopBy />
-      <Catalog title="Top Rated" products={topDeal?.products} />
+      <Catalog title="Top Rated" products={topDeal?.products} overflowHeight='max-h-[400px]'/>
     </div>
   );
 };

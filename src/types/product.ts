@@ -25,17 +25,10 @@ export interface Product {
 }
 
 export interface ProductState extends MetaCommon {
-  products: Product[];
-}
-
-export interface ProductCollectionState {
-  products: Product[];
-  currentPage: number;
-  totalPages: number;
-  totalItems: number;
-  limit: number;
-  isLoading: boolean;
-  error: string | null;
+  // products: Product[];
+  pages: {
+    [page: number]: Product[];
+  };
 }
 
 export interface ProductVariant {

@@ -1,6 +1,7 @@
 import { TrashIcon } from '@heroicons/react/24/outline';
 import { Button } from '@heroui/button';
 import { Image } from '@heroui/image';
+import { addToast } from '@heroui/react';
 import ModelPopup from 'components/molecules/modelPopup';
 import QuantityCustom from 'components/molecules/quantityCustom';
 import { useUserContext } from 'context/AuthContext';
@@ -39,6 +40,11 @@ const CartItem = ({ discountedPrice, cartItem }: CartItemProps) => {
 
   const handleRemove = useCallback(async () => {
     dispatch(deleteCartItem({ userId: user?._id, itemId: cartItem._id }));
+    addToast({
+      title: 'Giỏ hàng',
+      description: 'Đã xóa sản phẩm khỏi giỏ hàng',
+      color: 'success',
+    });
   }, [cartItem]);
 
   return (

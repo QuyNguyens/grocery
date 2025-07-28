@@ -2,7 +2,7 @@ import { Button } from '@heroui/button';
 import ClientStarRatings from 'components/molecules/clientStarRating';
 import React, { useCallback, useState } from 'react';
 import { PlusIcon, MinusIcon } from '@heroicons/react/24/outline';
-import { Divider } from '@heroui/react';
+import { addToast, Divider } from '@heroui/react';
 import ColorFilter from 'views/ProductFilter/componens/ColorFilter';
 import { useUserContext } from 'context/AuthContext';
 import { usePathname, useRouter } from 'next/navigation';
@@ -41,6 +41,11 @@ const ItemDetail = ({ product }: ItemDetailProps) => {
       type: product.categoryType,
     };
     dispatch(addCartItem({ item: cartItem, userId: user?._id }));
+    addToast({
+      title: 'Giỏ hàng',
+      description: 'Đã thêm sản phẩm vào giỏ hàng',
+      color: 'success'
+    });
   };
 
   const handleNavigate = useCallback((url: string) => {
@@ -106,7 +111,10 @@ const ItemDetail = ({ product }: ItemDetailProps) => {
         <p className="font-semibold">Quantity</p>
         <div className="mt-2 flex gap-2">
           <QuantityCustom inStock={product.quantity} amount={amount} setAmount={setAmount} />
-          <Button className="flex-1 rounded bg-green-500 text-white! font-semibold">
+          <Button
+            onClick={handleAddToCart}
+            className="flex-1 rounded bg-green-500 text-white! font-semibold"
+          >
             Add to Cart
           </Button>
         </div>

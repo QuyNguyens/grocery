@@ -4,26 +4,12 @@ import Catalog from 'components/molecules/catalog';
 import { useAppSelector } from 'hooks/useAppDispatch';
 import { PRODUCT_KEY } from 'constants/product';
 import { CategoryGroup } from 'types/category';
-import { categoryServices } from 'services/category.service';
 
-const Categories = () => {
+type CategoriesProps = {
+  categoryItems: CategoryGroup[];
+}
+const Categories = ({categoryItems}:CategoriesProps) => {
   const categories = useAppSelector((state) => state.products.collections[PRODUCT_KEY.categories]);
-  const [categoryItems, setCategoryItems] = useState<CategoryGroup[] | undefined>(undefined);
-
-  useEffect(() => {
-    const fetchCategory = async () => {
-      try {
-        const res = await categoryServices.get();
-
-        if (res?.data.success) {
-          setCategoryItems(res?.data.data);
-        }
-      } catch (error) {
-        console.error('error when get category: ', error);
-      }
-    };
-    fetchCategory();
-  }, []);
 
   return (
     <div className="flex">
@@ -41,7 +27,7 @@ const Categories = () => {
         )}
       </div>
       <div className="flex-1">
-        <Catalog title="Best Selling" products={categories?.products} />
+        <Catalog title="Best Selling" products={categories?.products} overflowHeight='max-h-[230px]' />
       </div>
     </div>
   );
