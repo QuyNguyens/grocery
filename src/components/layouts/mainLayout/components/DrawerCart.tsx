@@ -10,16 +10,16 @@ import {
 import CartItem from 'components/molecules/cartItem';
 import { useRouter } from 'next/navigation';
 import { ROUTES } from 'constants/routes';
-import { useAppSelector } from 'hooks/useAppDispatch';
+import { CartItem as CartItemData } from 'types/cart';
 
 type DrawerCartProps = {
   isOpen: boolean;
   onOpenChange: () => void;
+  cartItems: CartItemData[];
 };
 
-const DrawerCart = ({ isOpen, onOpenChange }: DrawerCartProps) => {
+const DrawerCart = ({ cartItems, isOpen, onOpenChange }: DrawerCartProps) => {
   const router = useRouter();
-  const cartItems = useAppSelector((state) => state.cart.cartItem);
 
   const totalPrice = useMemo(() => {
     if (cartItems.length > 0)
@@ -55,21 +55,25 @@ const DrawerCart = ({ isOpen, onOpenChange }: DrawerCartProps) => {
               </div>
               <div className="flex mx-4 my-3 gap-3">
                 <Button
-                  onClick={() => router.push(ROUTES.cart)}
                   fullWidth
                   radius="full"
                   className="text-white! font-bold bg-green-500 hover:bg-green-600"
-                  onPress={onClose}
+                  onClick={() => {
+                    onClose();
+                    router.push(ROUTES.cart);
+                  }}
                 >
                   ViewCart
                 </Button>
                 <Button
-                  onClick={() => router.push(ROUTES.checkout)}
                   className="font-bold text-white!"
                   fullWidth
                   radius="full"
                   color="primary"
-                  onPress={onClose}
+                  onClick={() => {
+                    onClose();
+                    router.push(ROUTES.checkout);
+                  }}
                 >
                   Checkout
                 </Button>

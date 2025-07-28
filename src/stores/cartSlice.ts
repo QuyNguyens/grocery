@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import axios from 'axios';
 import cartService from 'services/cart.service';
 import { CartItem } from 'types/cart';
 
@@ -55,7 +54,7 @@ export const addCartItem = createAsyncThunk(
   async ({ item, userId }: { item: any; userId: string }, thunkAPI) => {
     try {
       const response = await cartService.addCartItem(item, userId);
-      return response.data.data;
+      return response.data.data as CartItem;
     } catch (err: any) {
       return thunkAPI.rejectWithValue(err.response?.data?.message || 'Lỗi thêm sản phẩm');
     }
@@ -82,10 +81,10 @@ export const updateCartItem = createAsyncThunk(
 // delete cartItem from cart
 export const deleteCartItem = createAsyncThunk(
   'cart/deleteCartItem',
-  async (id: string, thunkAPI) => {
+  async ({ userId, itemId }: { userId: string; itemId: string }, thunkAPI) => {
     try {
-      await axios.delete(`/api/cart/${id}`);
-      return id;
+      await cartService.deleteCartItem(userId, itemId);
+      return itemId;
     } catch (err: any) {
       return thunkAPI.rejectWithValue(err.response?.data?.message || 'Lỗi xóa sản phẩm');
     }
@@ -122,8 +121,17 @@ const cartSlice = createSlice({
 
       // add cartItem
       .addCase(addCartItem.fulfilled, (state, action) => {
-        state.cartItem.push(action.payload);
-        state.totalItem += 1;
+        const exist = state.cartItem.find((item) => item._id === action.payload._id);
+        if (exist) {
+          exist.quantity = action.payload.quantity;
+        } else {
+          state.cartItem = [...state.cartItem, action.payload];
+          state.totalItem += 1;
+        }
+      })
+
+      .addCase(addCartItem.rejected, (state, action) => {
+        console.error('Thêm sản phẩm thất bại:', action.payload);
       })
 
       // update cartItem quantity

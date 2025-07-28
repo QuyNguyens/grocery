@@ -11,6 +11,8 @@ import { ProductVariant } from 'types/product';
 import QuantityCustom from 'components/molecules/quantityCustom';
 import { CartItem } from 'types/cart';
 import cartService from 'services/cart.service';
+import { useAppDispatch } from 'hooks/useAppDispatch';
+import { addCartItem } from 'stores/cartSlice';
 
 type ItemDetailProps = {
   product: ProductVariant;
@@ -22,6 +24,7 @@ const ItemDetail = ({ product }: ItemDetailProps) => {
   const [colorSelected, setColorSelected] = useState<string>('');
 
   const router = useRouter();
+  const dispatch = useAppDispatch();
   const { user } = useUserContext();
   const pathname = usePathname();
 
@@ -35,21 +38,9 @@ const ItemDetail = ({ product }: ItemDetailProps) => {
       },
       name: product.name,
       image: product?.images[0],
-      type: product.categoryType
+      type: product.categoryType,
     };
-
-    try {
-      const res = await cartService.addCartItem(cartItem, user._id);
-
-      if (res.data.success) {
-        //open popup
-        console.log('add success: ', res.data.data);
-      } else {
-        console.log('add failed: ', res.data);
-      }
-    } catch (error) {
-      console.error('Add Item to cart failed');
-    }
+    dispatch(addCartItem({ item: cartItem, userId: user?._id }));
   };
 
   const handleNavigate = useCallback((url: string) => {

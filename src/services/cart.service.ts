@@ -27,6 +27,13 @@ const cartService = {
       cartItem,
     );
   },
+
+  async deleteCartItem(userId: string, itemId: string) {
+    return axiosInstance.delete(
+      PREFIX_SERVICES.cart_service,
+      `/delete?userId=${userId}&itemId=${itemId}`,
+    );
+  },
 };
 
 export default cartService;

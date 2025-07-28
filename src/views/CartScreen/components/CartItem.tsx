@@ -1,11 +1,12 @@
 import { TrashIcon } from '@heroicons/react/24/outline';
 import { Button } from '@heroui/button';
 import { Image } from '@heroui/image';
+import ModelPopup from 'components/molecules/modelPopup';
 import QuantityCustom from 'components/molecules/quantityCustom';
 import { useUserContext } from 'context/AuthContext';
 import { useAppDispatch } from 'hooks/useAppDispatch';
-import React, { useEffect, useMemo, useState } from 'react';
-import { updateCartItem } from 'stores/cartSlice';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { deleteCartItem, updateCartItem } from 'stores/cartSlice';
 import { CartItem as CartItemData } from 'types/cart';
 
 type CartItemProps = {
@@ -21,20 +22,25 @@ const formatCurrency = (value: number) =>
 
 const CartItem = ({ discountedPrice, cartItem }: CartItemProps) => {
   const [amount, setAmount] = useState<number>(cartItem.quantity);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const dispatch = useAppDispatch();
   const { user } = useUserContext();
 
   useEffect(() => {
     if (user?._id && amount !== cartItem.quantity) {
-      dispatch(
-        updateCartItem({ userId: user._id, itemId: cartItem._id, quantity: amount }),
-      );
+      dispatch(updateCartItem({ userId: user._id, itemId: cartItem._id, quantity: amount }));
     }
   }, [amount]);
 
   const total = useMemo(() => {
     return discountedPrice * amount;
   }, [amount, dispatch]);
+
+  const handleRemove = useCallback(async () => {
+    dispatch(deleteCartItem({ userId: user?._id, itemId: cartItem._id }));
+  }, [cartItem]);
+
   return (
     <tr className="border-t border-gray-200 hover:bg-gray-100">
       <td className="p-2">
@@ -81,6 +87,7 @@ const CartItem = ({ discountedPrice, cartItem }: CartItemProps) => {
       <td className="p-2">
         <Button
           className="bg-red-500 text-white! rounded-full"
+          onClick={() => setIsModalOpen(true)}
           isIconOnly
           size="sm"
           aria-label="Remove item"
@@ -88,6 +95,13 @@ const CartItem = ({ discountedPrice, cartItem }: CartItemProps) => {
           <TrashIcon className="w-4 h-4" />
         </Button>
       </td>
+      <ModelPopup
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onConfirm={handleRemove}
+        title="Xác nhận xoá"
+        message="Bạn có chắc muốn xoá sản phẩm này khỏi giỏ hàng?"
+      />
     </tr>
   );
 };
