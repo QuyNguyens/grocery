@@ -8,18 +8,21 @@ import {
   useDisclosure,
   Input,
 } from '@heroui/react';
+import { useState } from 'react';
 
 type CouponCodeProps = {
+  couponCode: string;
   setCouponCode: React.Dispatch<React.SetStateAction<string>>;
 };
 
-export default function CouponCode({ setCouponCode }: CouponCodeProps) {
+export default function CouponCode({ couponCode, setCouponCode }: CouponCodeProps) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [localCode, setLocalCode] = useState<string>(couponCode);
 
   return (
     <>
       <span onClick={onOpen} className="underline">
-        Add coupon
+        {couponCode ? 'change' : 'Add coupon'}
       </span>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
@@ -30,7 +33,10 @@ export default function CouponCode({ setCouponCode }: CouponCodeProps) {
               </ModalHeader>
               <ModalBody>
                 <Input
-                  onChange={(e: any) => setCouponCode(e.target.value)}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setLocalCode(e.target.value)
+                  }
+                  value={localCode}
                   type="text"
                   placeholder="Enter your coupon..."
                 />
@@ -39,7 +45,14 @@ export default function CouponCode({ setCouponCode }: CouponCodeProps) {
                 <Button color="danger" variant="light" onPress={onClose}>
                   Close
                 </Button>
-                <Button className='text-white! font-semibold' color="success" onPress={onClose}>
+                <Button
+                  onPress={() => {
+                    setCouponCode(localCode);
+                    onClose();
+                  }}
+                  className="text-white! font-semibold"
+                  color="success"
+                >
                   Add
                 </Button>
               </ModalFooter>

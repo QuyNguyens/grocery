@@ -1,9 +1,8 @@
 import { ArrowUturnLeftIcon } from '@heroicons/react/24/outline';
 import { Image } from '@heroui/image';
-import { CartItem } from 'constants/product';
-import { p } from 'framer-motion/client';
 import { useRouter } from 'next/navigation';
 import React, { useMemo } from 'react';
+import { CartItem } from 'types/cart';
 import { CalculateDiscount } from 'utils/calculateDiscount';
 
 type ProductDetailProps = {
@@ -14,7 +13,7 @@ const ProductDetail = ({ cartItems }: ProductDetailProps) => {
   const router = useRouter();
   const totalPrice = useMemo(() => {
     return cartItems.reduce((sum, item) => {
-      const itemTotal = CalculateDiscount(item.price, item.discount) * item.quantity;
+      const itemTotal = CalculateDiscount(item.price, item.discount.value) * item.quantity;
       return sum + itemTotal;
     }, 0);
   }, [cartItems]);
@@ -50,12 +49,12 @@ const ProductDetail = ({ cartItems }: ProductDetailProps) => {
                   <div className="flex gap-3">
                     <span className="line-through text-gray-500">${item.price}.00</span>
                     <span className="text-red-500! font-semibold">
-                      ${CalculateDiscount(item.price, item.discount) * item.quantity}.00
+                      ${CalculateDiscount(item.price, item.discount.value) * item.quantity}.00
                     </span>
                   </div>
                   {item.quantity > 1 && (
                     <span className="text-sm font-normal text-gray-500">
-                      ${CalculateDiscount(item.price, item.discount)}.00 for each
+                      ${CalculateDiscount(item.price, item.discount.value)}.00 for each
                     </span>
                   )}
                 </div>
