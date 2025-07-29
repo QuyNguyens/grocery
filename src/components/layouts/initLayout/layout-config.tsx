@@ -1,8 +1,9 @@
-import { AUTH_ROUTES, EMPTY_ROUTES, HEADER_ONLY_ROUTES } from 'constants/routes';
+import { AUTH_ROUTES, COLLECTIONS_ROUTES, EMPTY_ROUTES, HEADER_ONLY_ROUTES } from 'constants/routes';
 import { ComponentType } from 'react';
 import AuthLayout from '../authLayout';
 import CheckoutLayout from '../checkoutLayout';
-import EmptyLayout from '../imptyLayout';
+import EmptyLayout from '../emptyLayout';
+import CollectionsLayout from '../collectionsLayout';
 
 export type TLayoutConfig = {
   pathname?: string[];
@@ -22,5 +23,9 @@ export const LAYOUT_CONFIG: TLayoutConfig[] = [
   {
     pathname: [...EMPTY_ROUTES],
     Layout: EmptyLayout
+  },
+  {
+    pathname: [...COLLECTIONS_ROUTES],
+    Layout: CollectionsLayout
   }
 ];

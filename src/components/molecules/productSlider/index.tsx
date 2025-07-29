@@ -3,7 +3,8 @@
 import React from 'react';
 import Slider from 'react-slick';
 import { NextArrow, PrevArrow } from '../arrowSlider';
-import ProductItem, { Product } from '../productItem';
+import ProductItem from '../productItem';
+import { Product } from 'types/product';
 
 type ProductSliderProps = {
   products: Product[];
@@ -47,7 +48,7 @@ const ProductSlider = ({
   return (
     <div className="relative p-2">
       <Slider {...settings}>
-        {products.map((product, index) => (
+        {products?.map((product, index) => (
           <div key={index} className="p-2">
             <ProductItem product={product} />
           </div>

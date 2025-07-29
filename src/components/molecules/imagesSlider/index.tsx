@@ -10,8 +10,8 @@ type ImagesSliderProps = {
   sliderToScroll: number;
   sliderToShowMd: number;
   sliderToShowSm: number;
-  selectedImage: string;
-  setSelectedImage: React.Dispatch<React.SetStateAction<string>>;
+  selectedImage: number;
+  setSelectedImage: React.Dispatch<React.SetStateAction<number>>;
 };
 
 const ImagesSlider = ({
@@ -53,8 +53,8 @@ const ImagesSlider = ({
       <Slider {...settings}>
         {images.map((image, index) => (
           <Image
-            onClick={() => setSelectedImage(image)}
-            className={`border ${selectedImage === image ? 'border-orange-500' : 'border-gray-200'} rounded-lg`}
+            onClick={() => setSelectedImage(index)}
+            className={`border ${selectedImage === index ? 'border-orange-500' : 'border-gray-200'} rounded-lg`}
             key={index}
             alt={`image ${index + 1}`}
             src={image}

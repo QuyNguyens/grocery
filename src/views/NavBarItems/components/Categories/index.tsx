@@ -1,21 +1,36 @@
-import React from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import Items from '../OurStore/components/Items';
-import { products } from 'constants/product';
 import Catalog from 'components/molecules/catalog';
+import { useAppSelector } from 'hooks/useAppDispatch';
+import { PRODUCT_KEY } from 'constants/product';
+import { CategoryGroup } from 'types/category';
 
-const Categories = () => {
+type CategoriesProps = {
+  categoryItems: CategoryGroup[];
+};
+const Categories = ({ categoryItems }: CategoriesProps) => {
+  const productState = useAppSelector(
+    (state) => state.products.collections[PRODUCT_KEY.categories],
+  );
+  const products = productState?.pages?.[productState?.currentPage || 1];
+
   return (
     <div className="flex">
-      <div className="flex-1 grid grid-cols-3 p-4">
-        <Items title="Bakery" list={['Biscuits', 'Cookies', 'Wafers', 'Cake']} />
-        <Items title="Meat & Eggs" list={['Poultry', 'Eggs', 'Meats', 'Chicken']} />
-        <Items title="Snacks Item" list={['Crackers', 'Bars', 'Chips', 'Toasts']} />
-        <Items title="Healthy Food" list={['Honey', 'Vegetables', 'Fruits', 'Juices']} />
-        <Items title="Milk Items" list={['Coffee', 'Cream', 'Chocolate', 'Milk']} />
-        <Items title="Sea Food" list={['Meats', 'Chicken', 'Eggs', 'Poultry']} />
+      <div className="flex-1 p-4">
+        {categoryItems && (
+          <div className="w-full grid grid-cols-3 gap-4">
+            {categoryItems.map((categoryItem, index) => (
+              <Items
+                key={index}
+                title={categoryItem.parentName}
+                list={categoryItem.children.map((item) => item.name)}
+              />
+            ))}
+          </div>
+        )}
       </div>
       <div className="flex-1">
-        <Catalog title="Best Selling" products={products} />
+        <Catalog title="Best Selling" products={products} overflowHeight="max-h-[230px]" />
       </div>
     </div>
   );

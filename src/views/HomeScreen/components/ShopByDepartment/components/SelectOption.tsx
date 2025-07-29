@@ -9,7 +9,7 @@ type SelectOptionProps = {
 const SelectOption = ({ option, setOption }: SelectOptionProps) => {
   return (
     <div className="flex w-full items-center justify-center gap-3">
-      {['Milk Items', 'Vegetables', 'Bakery'].map((item, index) => (
+      {['Milk Items', 'Vegetables', 'Biscuits'].map((item, index) => (
         <Button
           key={index}
           onClick={() => setOption(item)}

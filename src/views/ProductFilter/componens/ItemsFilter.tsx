@@ -6,6 +6,7 @@ import PriceFilter from './PriceFilter';
 
 const ItemsFilter = () => {
   const [selectedNames, setSelectedNames] = useState<string[]>([]);
+  const [color, setColor] = useState<string>('');
 
   return (
     <div className="min-w-[250px] hidden md:block rounded-xl border border-gray-200 h-fit">
@@ -20,7 +21,7 @@ const ItemsFilter = () => {
                 aria-label={filter.title}
                 title={filter.title}
               >
-                <ColorFilter />
+                <ColorFilter color={color} setColor={setColor} colors={['green', 'blue', 'pink', 'brown', 'yellow', 'orange']}/>
               </AccordionItem>
             );
           }

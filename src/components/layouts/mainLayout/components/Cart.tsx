@@ -1,23 +1,28 @@
-import {
-  Drawer,
-  DrawerContent,
-  DrawerHeader,
-  DrawerBody,
-  DrawerFooter,
-  Button,
-  useDisclosure,
-} from '@heroui/react';
+import { useDisclosure } from '@heroui/react';
 import { ShoppingCartIcon } from '@heroicons/react/24/outline';
 import AmountCart from './AmountCart';
 import DrawerCart from './DrawerCart';
 import { usePathname, useRouter } from 'next/navigation';
 import { ROUTES } from 'constants/routes';
-import { useCallback } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
+import { useAppDispatch, useAppSelector } from 'hooks/useAppDispatch';
+import { getCart } from 'stores/cartSlice';
+import { useUserContext } from 'context/AuthContext';
 
 const Cart = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const pathname = usePathname();
   const router = useRouter();
+  const dispatch = useAppDispatch();
+  const { user } = useUserContext();
+  const totalItem = useAppSelector((state) => state.cart.totalItem);
+  const cartItems = useAppSelector((state) => state.cart.cartItem);
+
+  const totalPrice = useMemo(() => {
+    return cartItems.reduce((total, item) => {
+      return total + item.price * item.quantity;
+    }, 0);
+  }, [cartItems]);
 
   const handleOpenCart = useCallback(() => {
     const accessToken = localStorage.getItem('access_token');
@@ -25,7 +30,13 @@ const Cart = () => {
       return pathname === ROUTES.cart ? undefined : onOpen();
     }
     router.push('/login');
-  }, []);
+  }, [router]);
+
+  useEffect(() => {
+    if (user?._id) {
+      dispatch(getCart({ userId: user._id }));
+    }
+  }, [dispatch, user]);
 
   return (
     <>
@@ -34,12 +45,12 @@ const Cart = () => {
         <div>
           <div className="flex items-center gap-1">
             <span className="text-xs">Cart</span>
-            <AmountCart amount={0} />
+            <AmountCart amount={totalItem} />
           </div>
-          <span className="font-bold text-[#184363]">$0.00</span>
+          <span className="font-bold text-[#184363]">${totalPrice}.00</span>
         </div>
       </div>
-      <DrawerCart isOpen={isOpen} onOpenChange={onOpenChange} />
+      <DrawerCart cartItems={cartItems} isOpen={isOpen} onOpenChange={onOpenChange} />
     </>
   );
 };

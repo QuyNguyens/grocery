@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Department from './components/Department';
 import OurStore from './components/OurStore';
@@ -10,11 +10,28 @@ import Categories from './components/Categories';
 import TopDeal from './components/TopDeal';
 import Element from './components/Element';
 import { ROUTES } from 'constants/routes';
+import { CategoryGroup } from 'types/category';
+import { categoryServices } from 'services/category.service';
 
 const NavBarItems = () => {
   const [activeId, setActiveId] = useState<string | null>(null);
-  const closeAll = () => setActiveId(null);
   const router = useRouter();
+  const [categoryItems, setCategoryItems] = useState<CategoryGroup[] | undefined>(undefined);
+
+  useEffect(() => {
+    const fetchCategory = async () => {
+      try {
+        const res = await categoryServices.get();
+
+        if (res?.data.success) {
+          setCategoryItems(res?.data.data);
+        }
+      } catch (error) {
+        console.error('error when get category: ', error);
+      }
+    };
+    fetchCategory();
+  }, []);
 
   return (
     <div className="relative mt-3 px-3 pb-2 max-w-[1200px] mx-auto flex items-center gap-10 border-b border-gray-300">
@@ -26,7 +43,7 @@ const NavBarItems = () => {
         Home
       </span>
       <MenuDropdown
-        routeName={ROUTES.ourStore}
+        routeName={`${ROUTES.collections}/${ROUTES.ourStore}`}
         id="ourStore"
         label="Our store"
         activeId={activeId}
@@ -35,8 +52,8 @@ const NavBarItems = () => {
         <OurStore />
       </MenuDropdown>
       <MenuDropdown
-        routeName={ROUTES.special}
-        id="special"
+        routeName={`${ROUTES.collections}/${ROUTES.special}`}
+        id="special"  
         label="Special"
         activeId={activeId}
         setActiveId={setActiveId}
@@ -50,7 +67,7 @@ const NavBarItems = () => {
         activeId={activeId}
         setActiveId={setActiveId}
       >
-        <Categories />
+        {categoryItems && <Categories categoryItems={categoryItems} />}
       </MenuDropdown>
       <MenuDropdown
         routeName={ROUTES.topDeal}
