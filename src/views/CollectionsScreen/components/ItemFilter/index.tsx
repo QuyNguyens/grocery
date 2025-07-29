@@ -1,18 +1,25 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Accordion, AccordionItem, Checkbox, CheckboxGroup } from '@heroui/react';
-import { ITEMS_FILTER } from 'constants/filter';
-import ColorFilter from './ColorFilter';
-import PriceFilter from './PriceFilter';
+import ColorFilter from './components/ColorFilter';
+import PriceFilter from './components/PriceFilter';
+import { Product } from 'types/product';
+import { generateItemFilters } from './components/generateItemFilters';
 
-const ItemsFilter = () => {
-  const [selectedNames, setSelectedNames] = useState<string[]>([]);
-  const [color, setColor] = useState<string>('');
+type ItemsFilterProps = {
+  products: Product[];
+  selectedNames: string[];
+  setSelectedNames: React.Dispatch<React.SetStateAction<string[]>>;
+  color: string;
+  setColor: React.Dispatch<React.SetStateAction<string>>;
+};
 
+const ItemsFilter = ({ products, selectedNames, setSelectedNames, color, setColor }: ItemsFilterProps) => {
+  const itemFilters = generateItemFilters(products);  
   return (
     <div className="min-w-[250px] hidden md:block rounded-xl border border-gray-200 h-fit">
       <h2 className="text-[16px] font-semibold py-4 border-b border-gray-200 pl-3">Filter</h2>
       <Accordion className="p-0!">
-        {ITEMS_FILTER.map((filter) => {
+        {itemFilters.map((filter) => {
           if (filter.title === 'Color') {
             return (
               <AccordionItem
@@ -21,7 +28,11 @@ const ItemsFilter = () => {
                 aria-label={filter.title}
                 title={filter.title}
               >
-                <ColorFilter color={color} setColor={setColor} colors={['green', 'blue', 'pink', 'brown', 'yellow', 'orange']}/>
+                <ColorFilter
+                  color={color}
+                  setColor={setColor}
+                  colors={['green', 'blue', 'pink', 'brown', 'yellow', 'orange']}
+                />
               </AccordionItem>
             );
           }

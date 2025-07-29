@@ -127,8 +127,10 @@ export const PRODUCT_KEY = {
   topDeal: 'top-deal',
   special: 'special',
   bestSelling: 'best-selling',
-  ourStore: 'our-store'
+  ourStore: 'our-store',
+  collections: 'collections',
 };
+
 export const CATEGORY_HOME = {
   milkItems: 'Milk Items',
   vegetables: 'Vegetables',

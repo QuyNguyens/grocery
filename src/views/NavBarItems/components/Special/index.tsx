@@ -4,12 +4,14 @@ import { useAppSelector } from 'hooks/useAppDispatch';
 import { PRODUCT_KEY } from 'constants/product';
 
 const Special = () => {
-  const special = useAppSelector((state) => state.products.collections[PRODUCT_KEY.special]);
+  const productState = useAppSelector((state) => state.products.collections[PRODUCT_KEY.special]);
+  const products = productState?.pages?.[productState?.currentPage || 1];
+
   return (
     <div>
       <h1 className="mt-4 text-xl font-semibold text-gray-700 text-center">Special</h1>
       <ProductSlider
-        productState={special}
+        products={products}
         sliderToScroll={1}
         sliderToShow={5}
         sliderToShowMd={4}

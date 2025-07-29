@@ -7,9 +7,12 @@ import { CategoryGroup } from 'types/category';
 
 type CategoriesProps = {
   categoryItems: CategoryGroup[];
-}
-const Categories = ({categoryItems}:CategoriesProps) => {
-  const categories = useAppSelector((state) => state.products.collections[PRODUCT_KEY.categories]);
+};
+const Categories = ({ categoryItems }: CategoriesProps) => {
+  const productState = useAppSelector(
+    (state) => state.products.collections[PRODUCT_KEY.categories],
+  );
+  const products = productState?.pages?.[productState?.currentPage || 1];
 
   return (
     <div className="flex">
@@ -27,7 +30,7 @@ const Categories = ({categoryItems}:CategoriesProps) => {
         )}
       </div>
       <div className="flex-1">
-        <Catalog title="Best Selling" products={categories?.products} overflowHeight='max-h-[230px]' />
+        <Catalog title="Best Selling" products={products} overflowHeight="max-h-[230px]" />
       </div>
     </div>
   );

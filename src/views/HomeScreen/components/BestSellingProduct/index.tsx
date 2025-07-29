@@ -6,16 +6,16 @@ import { useAppSelector } from 'hooks/useAppDispatch';
 import React from 'react';
 
 const BestSellingProduct = () => {
-  const bestSelling = useAppSelector(
+  const productState = useAppSelector(
     (state) => state.products.collections[PRODUCT_KEY.bestSelling],
   );
-
+  const products = productState?.pages?.[productState?.currentPage || 1];
   return (
     <div className="mt-10">
       <Title title="Best Selling Products" className="mb-2" />
-      {bestSelling?.products.length > 0 ? (
+      {products?.length > 0 ? (
         <ProductSlider
-          productState={bestSelling}
+          products={products}
           sliderToScroll={1}
           sliderToShow={5}
           sliderToShowMd={4}

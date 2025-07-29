@@ -9,14 +9,17 @@ import { useAppSelector } from 'hooks/useAppDispatch';
 import ProductSkeleton from 'components/molecules/productSkeleton';
 
 const FeatureCollection = () => {
-  const categories = useAppSelector((state) => state.products.collections[PRODUCT_KEY.categories]);
+  const productState = useAppSelector(
+    (state) => state.products.collections[PRODUCT_KEY.categories],
+  );
+  const categories = productState?.pages?.[productState?.currentPage || 1];
 
   return (
     <div className="md:mt-10 lg:mt-20">
       <Title title="Featured Collection" />
-      {categories?.products.length > 0 ? (
+      {categories?.length > 0 ? (
         <ProductSlider
-          productState={categories}
+          products={categories}
           sliderToScroll={1}
           sliderToShow={5}
           sliderToShowMd={4}

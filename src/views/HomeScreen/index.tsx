@@ -19,7 +19,7 @@ const HomeScreen = () => {
       fetchProductsByCollection({
         collectionKey: PRODUCT_KEY.categories,
         page: 1,
-        limit: 10,
+        limit: 8,
         name: 'Vegetables',
       }),
     );
@@ -27,7 +27,7 @@ const HomeScreen = () => {
       fetchProductsByCollection({
         collectionKey: PRODUCT_KEY.bestSelling,
         page: 1,
-        limit: 10,
+        limit: 8,
         name: '',
       }),
     );
@@ -35,7 +35,7 @@ const HomeScreen = () => {
       fetchProductsByCollection({
         collectionKey: PRODUCT_KEY.topDeal,
         page: 1,
-        limit: 10,
+        limit: 8,
         name: '',
       }),
     );
@@ -43,7 +43,7 @@ const HomeScreen = () => {
       fetchProductsByCollection({
         collectionKey: PRODUCT_KEY.special,
         page: 1,
-        limit: 10,
+        limit: 8,
         name: '',
       }),
     );

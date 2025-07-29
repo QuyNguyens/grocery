@@ -13,7 +13,10 @@ const ShopByDepartment = () => {
   const [option, setOption] = useState<string>('Vegetables');
 
   const dispatch = useAppDispatch();
-  const categories = useAppSelector((state) => state.products.collections[PRODUCT_KEY.categories]);
+  const productState = useAppSelector(
+    (state) => state.products.collections[PRODUCT_KEY.categories],
+  );
+  const products = productState?.pages?.[productState?.currentPage || 1];
 
   useEffect(() => {
     dispatch(
@@ -30,9 +33,9 @@ const ShopByDepartment = () => {
     <div className="mt-10 flex flex-col gap-4">
       <Title title="Shop by Department" />
       <SelectOption option={option} setOption={setOption} />
-      {categories?.products.length > 0 ? (
+      {products?.length > 0 ? (
         <ProductSlider
-          productState={categories}
+          products={products}
           sliderToScroll={1}
           sliderToShow={5}
           sliderToShowMd={4}

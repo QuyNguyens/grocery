@@ -6,13 +6,15 @@ import { useAppSelector } from 'hooks/useAppDispatch';
 import React from 'react';
 
 const OurProduct = () => {
-      const categories = useAppSelector((state) => state.products.collections[PRODUCT_KEY.categories]);
-
+  const productState = useAppSelector(
+    (state) => state.products.collections[PRODUCT_KEY.categories],
+  );
+  const products = productState?.pages?.[productState?.currentPage || 1];
   return (
     <div className="mt-10 flex flex-col justify-center items-center gap-5 p-4">
       <Title title="Don't Miss Our Products" />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 overflow-y-auto max-h-[380px]">
-        {categories?.products.map((product, index) => (
+        {products?.map((product, index) => (
           <ProductItemVertical key={index} product={product} imageSize={100} isBorderImage={true} />
         ))}
       </div>

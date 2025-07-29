@@ -43,7 +43,7 @@ const NavBarItems = () => {
         Home
       </span>
       <MenuDropdown
-        routeName={ROUTES.ourStore}
+        routeName={`${ROUTES.collections}/${ROUTES.ourStore}`}
         id="ourStore"
         label="Our store"
         activeId={activeId}
@@ -52,8 +52,8 @@ const NavBarItems = () => {
         <OurStore />
       </MenuDropdown>
       <MenuDropdown
-        routeName={ROUTES.special}
-        id="special"
+        routeName={`${ROUTES.collections}/${ROUTES.special}`}
+        id="special"  
         label="Special"
         activeId={activeId}
         setActiveId={setActiveId}

@@ -20,11 +20,15 @@ interface FetchProductsParams {
   page?: number;
   limit?: number;
   name: string;
+  force?: boolean;
 }
 
 export const fetchProductsByCollection = createAsyncThunk(
   'product/fetchProductsByCollection',
-  async ({ collectionKey, page = 1, limit = 10, name }: FetchProductsParams, thunkAPI) => {
+  async (
+    { collectionKey, page = 1, limit = 10, name, force = false }: FetchProductsParams,
+    thunkAPI,
+  ) => {
     try {
       const response = await productServices.fetchProductsByCollection(
         collectionKey,
@@ -50,7 +54,9 @@ export const fetchProductsByCollection = createAsyncThunk(
     }
   },
   {
-    condition: ({ collectionKey, page = 1 }, { getState }) => {
+    condition: ({ collectionKey, page = 1, force = false }, { getState }) => {
+      if (force) return true;
+
       const state = getState() as { products: ProductSliceState };
       const collection = state.products.collections[collectionKey];
 
@@ -66,7 +72,8 @@ export const fetchProductsByCollection = createAsyncThunk(
 const productSlice = createSlice({
   name: 'products',
   initialState,
-  reducers: {},
+  reducers: {
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchProductsByCollection.pending, (state, action) => {

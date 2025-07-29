@@ -22,6 +22,7 @@ export interface Product {
   sku: string;
   categoryType?: string;
   categoryRefType?: string[];
+  inStock: number;
 }
 
 export interface ProductState extends MetaCommon {
