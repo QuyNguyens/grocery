@@ -1,10 +1,14 @@
+'use client';
+
 import { PRODUCT_KEY } from 'constants/product';
 import { useAppSelector } from 'hooks/useAppDispatch';
 import React from 'react';
 import ProductList from 'views/ProductList';
 
 const CategoriesScreen = () => {
-  const productState = useAppSelector((state) => state.products.collections[PRODUCT_KEY.categories]);
+  const productState = useAppSelector(
+    (state) => state.products.collections[PRODUCT_KEY.categories],
+  );
   const products = productState?.pages?.[productState.currentPage || 1];
 
   return (

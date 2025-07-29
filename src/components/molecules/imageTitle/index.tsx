@@ -1,6 +1,6 @@
 import { Image } from '@heroui/image';
 import React from 'react';
-import { Product } from '../productItem';
+import { Product } from 'types/product';
 
 type ImageTitleProps = {
   product: Product;
