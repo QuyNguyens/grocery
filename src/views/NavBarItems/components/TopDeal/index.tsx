@@ -2,7 +2,7 @@ import React from 'react';
 import { PRODUCT_KEY } from 'constants/product';
 import Catalog from 'components/molecules/catalog';
 import { useAppSelector } from 'hooks/useAppDispatch';
-import ShopBy from './components/ShopBy';
+import ShopBy from './components/Shopby';
 
 const TopDeal = () => {
   const productState = useAppSelector((state) => state.products.collections[PRODUCT_KEY.topDeal]);
