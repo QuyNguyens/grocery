@@ -1,8 +1,8 @@
 import React from 'react';
 import { PRODUCT_KEY } from 'constants/product';
 import Catalog from 'components/molecules/catalog';
-import ShopBy from './components/ShopBy';
 import { useAppSelector } from 'hooks/useAppDispatch';
+import ShopBy from './components/ShopBy';
 
 const TopDeal = () => {
   const productState = useAppSelector((state) => state.products.collections[PRODUCT_KEY.topDeal]);
@@ -10,7 +10,7 @@ const TopDeal = () => {
 
   return (
     <div className="flex">
-      <ShopBy />
+      <ShopBy products={products}/>
       <Catalog title="Top Rated" products={products} overflowHeight="max-h-[400px]" />
     </div>
   );
