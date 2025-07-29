@@ -1,3 +1,5 @@
+'use client';
+
 import { PRODUCT_KEY } from 'constants/product';
 import { useAppSelector } from 'hooks/useAppDispatch';
 import React from 'react';

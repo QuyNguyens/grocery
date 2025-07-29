@@ -6,14 +6,16 @@ import React from 'react';
 import ProductDetail from './components/ProductDetail';
 import { CART_ITEMS } from 'constants/product';
 import ShippingInfo from './components/ShippingInfo';
+import { useAppSelector } from 'hooks/useAppDispatch';
 
 const CheckOutScreen = () => {
   const router = useRouter();
+  const cartItems = useAppSelector((state) => state.cart.cartItem);
 
   return (
     <div className="w-full flex flex-col items-center justify-center p-4 pt-10 bg-white">
       <div className="w-full max-w-[1200px] flex gap-8">
-        <ProductDetail cartItems={CART_ITEMS} />
+        <ProductDetail cartItems={cartItems} />
         <ShippingInfo />
       </div>
     </div>
