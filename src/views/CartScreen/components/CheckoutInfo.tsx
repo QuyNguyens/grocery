@@ -42,7 +42,7 @@ const CheckoutInfo = ({ total, saleTax, couponCode, setCouponCode }: CheckoutInf
         </div>
         <div className="flex justify-end">
           <Button
-            onClick={() => router.push(ROUTES.checkout)}
+            onPress={() => router.push(ROUTES.checkout)}
             className="bg-green-500 min-w-[230px] text-white! font-semibold rounded-lg"
           >
             Check out

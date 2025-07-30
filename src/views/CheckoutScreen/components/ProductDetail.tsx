@@ -7,16 +7,11 @@ import { CalculateDiscount } from 'utils/calculateDiscount';
 
 type ProductDetailProps = {
   cartItems: CartItem[];
+  totalPrice: number;
 };
 
-const ProductDetail = ({ cartItems }: ProductDetailProps) => {
+const ProductDetail = ({ totalPrice, cartItems }: ProductDetailProps) => {
   const router = useRouter();
-  const totalPrice = useMemo(() => {
-    return cartItems.reduce((sum, item) => {
-      const itemTotal = CalculateDiscount(item.price, item.discount.value) * item.quantity;
-      return sum + itemTotal;
-    }, 0);
-  }, [cartItems]);
 
   return (
     <div className="flex-1 flex flex-col gap-5 px-10 py-2 bg-white shadow-2xl rounded-lg">

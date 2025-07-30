@@ -10,7 +10,7 @@ type CategoriesProps = {
 };
 const Categories = ({ categoryItems }: CategoriesProps) => {
   const productState = useAppSelector(
-    (state) => state.products.collections[PRODUCT_KEY.categories],
+    (state) => state.products.collections[PRODUCT_KEY.bestSelling],
   );
   const products = productState?.pages?.[productState?.currentPage || 1];
 

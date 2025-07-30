@@ -1,18 +1,35 @@
-import { useState, useMemo, useRef } from 'react';
+import { useState, useMemo, useRef, useEffect } from 'react';
 import { Button } from '@heroui/button';
 import { Input } from '@heroui/input';
 import { AddressSelector } from 'components/molecules/addressSelector';
 import { provinces } from 'constants/vietnamAddress';
 import debounce from 'lodash.debounce';
+import cartService from 'services/cart.service';
+import { CartItem } from 'types/cart';
+import { useUserContext } from 'context/AuthContext';
+import { DeliveryAddress } from 'types/deliveryAddress';
 
-const ShippingInfo = () => {
+type ShippingInfoProps = {
+  cartItems: CartItem[];
+  totalPrice: number;
+};
+
+const ShippingInfo = ({ cartItems, totalPrice }: ShippingInfoProps) => {
   const formRef = useRef<HTMLFormElement>(null);
-  const [addressSelected, setAddressSelected] = useState<any>({});
   const [inputsValue, setInputsValue] = useState({
     name: '',
     'phone-number': '',
     address: '',
   });
+
+  const [addressSelected, setAddressSelected] = useState<any>({});
+  const [errors, setErrors] = useState({
+    name: '',
+    phoneNumber: '',
+    address: '',
+    location: '',
+  });
+  const { user } = useUserContext();
 
   const debouncedSetInputsValue = useMemo(
     () =>
@@ -44,45 +61,110 @@ const ShippingInfo = () => {
     return inputsValue;
   };
 
+  const validate = (inputData: typeof inputsValue, selectedAddress: any) => {
+    const newErrors = {
+      name: '',
+      phoneNumber: '',
+      address: '',
+      location: '',
+    };
+
+    if (!inputData.name.trim()) newErrors.name = 'Vui lòng nhập họ và tên';
+    if (!inputData['phone-number'].trim()) newErrors.phoneNumber = 'Vui lòng nhập số điện thoại';
+    if (!inputData.address.trim()) newErrors.address = 'Vui lòng nhập địa chỉ cụ thể';
+    if (
+      !selectedAddress?.ward?.name ||
+      !selectedAddress?.district?.name ||
+      !selectedAddress?.province?.name
+    ) {
+      newErrors.location = 'Vui lòng chọn đầy đủ tỉnh/thành, quận/huyện, phường/xã';
+    }
+
+    setErrors(newErrors);
+    return Object.values(newErrors).every((err) => err === '');
+  };
+
+  const handlePayment = async (e: any) => {
+    e.preventDefault();
+    const fullInputs = updateAllInputsFromDOM();
+    const isValid = validate(fullInputs, addressSelected);
+
+    if (isValid) {
+      try {
+        const userAddress: DeliveryAddress = {
+          fullName: inputsValue.name,
+          phone: inputsValue['phone-number'],
+          province: addressSelected.province.name,
+          district: addressSelected.district.name,
+          ward: addressSelected.ward.name,
+          detail: `${inputsValue.address}, ${addressSelected.ward.name}, ${addressSelected.district.name}, ${addressSelected.province.name}`,
+          isDefault: true,
+        };
+        const res = await cartService.payment(user?._id, totalPrice, cartItems, userAddress);
+        if (res.data.success) {
+          localStorage.setItem('user-address', JSON.stringify(userAddress));
+          window.location.href = res.data.data;
+        }
+      } catch (error) {
+        console.error('lỗi khi thanh toán');
+      }
+    } else {
+      console.log('Có lỗi trong form');
+    }
+  };
+
   return (
     <form ref={formRef} className="flex-1 flex flex-col gap-6 p-4 shadow-2xl rounded-lg">
-      <h1 className="text-center font-semibold text-2xl mb-5">Shipping Information</h1>
+      <h1 className="text-center font-semibold text-2xl mb-4">Shipping Information</h1>
 
       <div className="flex gap-4">
-        <Input
-          labelPlacement="outside"
-          name="name"
-          label="Họ và tên"
-          type="text"
-          placeholder="Nhập họ và tên..."
-          onChange={handleInputChange}
-        />
-        <Input
-          labelPlacement="outside"
-          label="Số điện thoại"
-          name="phone-number"
-          type="tel"
-          placeholder="Nhập số điện thoại..."
-          onChange={handleInputChange}
-        />
+        <div className="flex-1">
+          <Input
+            labelPlacement="outside"
+            name="name"
+            label="Họ và tên"
+            type="text"
+            placeholder="Nhập họ và tên..."
+            onChange={handleInputChange}
+          />
+          {errors.name && <p className="text-red-500! text-sm mt-1">{errors.name}</p>}
+        </div>
+
+        <div className="flex-1">
+          <Input
+            labelPlacement="outside"
+            label="Số điện thoại"
+            name="phone-number"
+            type="tel"
+            placeholder="Nhập số điện thoại..."
+            onChange={handleInputChange}
+          />
+          {errors.phoneNumber && <p className="text-red-500! text-sm mt-1">{errors.phoneNumber}</p>}
+        </div>
       </div>
 
-      <AddressSelector
-        data={provinces}
-        onChange={(address) => {
-          const allInputs = updateAllInputsFromDOM();
-          setAddressSelected(address);
-        }}
-      />
+      <div>
+        <AddressSelector
+          data={provinces}
+          onChange={(address) => {
+            const allInputs = updateAllInputsFromDOM();
+            setAddressSelected(address);
+          }}
+        />
+        {errors.location && <p className="text-red-500! text-sm mt-1">{errors.location}</p>}
+      </div>
 
-      <Input
-        labelPlacement="outside"
-        label="Địa chỉ cụ thể"
-        name="address"
-        type="text"
-        placeholder="Nhập địa chỉ cụ thể..."
-        onChange={handleInputChange}
-      />
+      <div>
+        <Input
+          labelPlacement="outside"
+          label="Địa chỉ cụ thể"
+          name="address"
+          type="text"
+          placeholder="Nhập địa chỉ cụ thể..."
+          onChange={handleInputChange}
+        />
+        {errors.address && <p className="text-red-500! text-sm mt-1">{errors.address}</p>}
+      </div>
 
       {addressSelected?.ward && inputsValue.address && (
         <p className="text-sm leading-6">
@@ -100,11 +182,7 @@ const ShippingInfo = () => {
           fullWidth
           className="rounded-md bg-blue-500 text-white! font-semibold"
           size="lg"
-          onClick={(e) => {
-            e.preventDefault();
-            const fullInputs = updateAllInputsFromDOM();
-            console.log('Submit:', fullInputs, addressSelected);
-          }}
+          onClick={handlePayment}
         >
           Payment
         </Button>

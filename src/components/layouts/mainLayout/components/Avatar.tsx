@@ -7,16 +7,23 @@ import {
 } from '@heroui/react';
 import {
   UserCircleIcon,
-  ShoppingCartIcon,
   ArrowDownOnSquareIcon,
+  ShoppingBagIcon,
 } from '@heroicons/react/24/outline';
-import { useCallback } from 'react';
 import { useUserContext } from 'context/AuthContext';
 import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { checkImageExists } from 'utils/checkImageExists';
 
 export default function Avatar() {
   const { user, setUser } = useUserContext();
+  const [avatarUrlExists, setAvatarUrlExists] = useState<boolean>(false);
+
   const router = useRouter();
+
+  useEffect(() => {
+    checkImageExists(user?.avatar || '').then(setAvatarUrlExists);
+  }, [user]);
 
   const handleLogout = () => {
     localStorage.removeItem('access_token');
@@ -28,11 +35,17 @@ export default function Avatar() {
   return (
     <Dropdown>
       <DropdownTrigger>
-        <AvatarIcon
-          isBordered
-          radius="full"
-          src="https://i.pravatar.cc/150?u=a04258114e29026708c"
-        />
+        {avatarUrlExists ? (
+          <AvatarIcon src={user.avatar} />
+        ) : (
+          <AvatarIcon
+            classNames={{
+              base: 'bg-linear-to-br from-[#FFB457] to-[#FF705B]',
+              icon: 'text-black/80',
+            }}
+            icon={<AvatarIcon />}
+          />
+        )}
       </DropdownTrigger>
       <DropdownMenu aria-label="Static Actions">
         <DropdownItem key="signin">
@@ -47,8 +60,8 @@ export default function Avatar() {
         <DropdownItem startContent={<UserCircleIcon className="w-6 h-6" />} key="profile">
           <h3>Profile</h3>
         </DropdownItem>
-        <DropdownItem startContent={<ShoppingCartIcon className="w-6 h-6" />} key="cart">
-          <h3>Cart</h3>
+        <DropdownItem startContent={<ShoppingBagIcon className="w-6 h-6" />} key="order">
+          <h3>Order</h3>
         </DropdownItem>
         <DropdownItem
           onClick={handleLogout}

@@ -14,7 +14,7 @@ const ImageTitle = ({ product, imageRadius, imageSize }: ImageTitleProps) => {
       <Image
         className={`${imageRadius} border-2 border-gray-300 hover:border-gray-400`}
         alt="product image"
-        src={product.image?.toString()}
+        src={product.images[0]?.toString()}
         width={imageSize}
       />
       <span className="text-sm text-center font-semibold text-gray-700 hover:text-green-500">

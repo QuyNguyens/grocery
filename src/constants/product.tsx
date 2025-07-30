@@ -23,7 +23,7 @@ interface CatalogItem {
 export const catalogItems: CatalogItem[] = [
   {
     image: Vegetable.src,
-    name: 'Vegetable',
+    name: 'Vegetables',
   },
   {
     image: Fruit.src,

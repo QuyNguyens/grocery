@@ -25,6 +25,7 @@ const ShopByDepartment = () => {
         page: 1,
         limit: 10,
         name: option,
+        force: true,
       }),
     );
   }, [option]);

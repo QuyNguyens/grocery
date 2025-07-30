@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useEffect, useMemo } from 'react';
 import { Select, SelectItem } from '@heroui/react';
 import { District, Province, Ward } from 'types/address';
@@ -11,6 +13,16 @@ export function AddressSelector({ data, onChange }: AddressSelectorProps) {
   const [selectedProvinceCode, setSelectedProvinceCode] = useState<string | undefined>();
   const [selectedDistrictCode, setSelectedDistrictCode] = useState<string | undefined>();
   const [selectedWardCode, setSelectedWardCode] = useState<string | undefined>();
+
+  useEffect(() => {
+    const address = localStorage.getItem('addressCode');
+    if (address) {
+      const addressCode = JSON.parse(address);
+      setSelectedDistrictCode(addressCode.districtCode);
+      setSelectedProvinceCode(addressCode.provinceCode);
+      setSelectedWardCode(addressCode.wardCode);
+    }
+  }, []);
 
   const province = useMemo(() => {
     return data.find((p) => p.code.toString() === selectedProvinceCode);
@@ -76,7 +88,15 @@ export function AddressSelector({ data, onChange }: AddressSelectorProps) {
         placeholder="Phường/Xã"
         value={selectedWardCode}
         isDisabled={!district}
-        onChange={(e) => setSelectedWardCode(e.target.value)}
+        onChange={(e) => {
+          setSelectedWardCode(e.target.value);
+          const addressCode = {
+            provinceCode: selectedProvinceCode,
+            districtCode: selectedDistrictCode,
+            wardCode: e.target.value,
+          };
+          localStorage.setItem('addressCode', JSON.stringify(addressCode));
+        }}
       >
         {(district?.wards ?? []).map((w) => (
           <SelectItem key={w.code.toString()} textValue={w.name.toString()}>

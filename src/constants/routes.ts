@@ -14,7 +14,8 @@ export const ROUTES = {
   topDeal: '/top-deal',
   checkout: '/cart/checkout',
   authCallback: '/auth/callback',
-  collections: '/collections'
+  collections: '/collections',
+  orderStatus: '/order/order-status',
 };
 
 export const AUTH_ROUTES = [
@@ -24,7 +25,7 @@ export const AUTH_ROUTES = [
   ROUTES.signup,
 ];
 
-export const HEADER_ONLY_ROUTES = [ROUTES.checkout];
+export const HEADER_ONLY_ROUTES = [ROUTES.checkout, ROUTES.orderStatus];
 
 export const EMPTY_ROUTES = [ROUTES.authCallback];
 

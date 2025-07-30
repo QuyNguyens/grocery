@@ -8,7 +8,6 @@ import { ProductVariant } from 'types/product';
 import ProductVariantServices from 'services/productVariant.service';
 import { Divider } from '@heroui/react';
 import Review from './components/Review';
-import { CartItem } from 'constants/product';
 
 const ProductDetailScreen = () => {
   const params = useParams();

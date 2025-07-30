@@ -1,13 +1,17 @@
 import { Image } from '@heroui/image';
 import { catalogItems } from 'constants/product';
+import { ROUTES } from 'constants/routes';
+import { useRouter } from 'next/navigation';
 import React from 'react';
 
 const CatalogItems = () => {
+  const router = useRouter();
   return (
     <div className="flex flex-nowrap gap-5 w-full overflow-hidden">
       {catalogItems.map((item, index) => (
         <div
           key={index}
+          onClick={() => router.push(`${ROUTES.collections}/${item.name}`)}
           className="
             shrink-0 overflow-hidden                        
             group bg-white rounded-xl shadow-xl

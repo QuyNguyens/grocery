@@ -47,6 +47,14 @@ const HomeScreen = () => {
         name: '',
       }),
     );
+    dispatch(
+      fetchProductsByCollection({
+        collectionKey: PRODUCT_KEY.ourStore,
+        page: 1,
+        limit: 9,
+        name: '',
+      }),
+    );
   }, []);
 
   return (

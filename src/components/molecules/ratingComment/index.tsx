@@ -3,6 +3,7 @@ import { UserRating } from 'types/ratingCustomer';
 import ClientStarRatings from '../clientStarRating';
 import { Avatar, AvatarIcon } from '@heroui/react';
 import { DateTimeFormat } from 'utils/datetimeFormat';
+import { checkImageExists } from 'utils/checkImageExists';
 
 type RatingCommentProps = {
   userRating: UserRating;
@@ -12,20 +13,9 @@ const RatingComment = ({ userRating }: RatingCommentProps) => {
   const [avatarUrlExists, setAvatarUrlExists] = useState<boolean>(false);
 
   useEffect(() => {
-    const checkImageExists = async () => {
-      if (!userRating.avatar) return setAvatarUrlExists(false);
-
-      try {
-        const res = await fetch(userRating.avatar, { method: 'HEAD' });
-        setAvatarUrlExists(res.ok);
-      } catch (err) {
-        setAvatarUrlExists(false);
-      }
-    };
-
-    checkImageExists();
+    checkImageExists(userRating.avatar).then(setAvatarUrlExists);
   }, [userRating.avatar]);
-  
+
   return (
     <div className="w-full flex flex-col gap-3 mb-4 p-4 rounded-sm border border-gray-200">
       <div className="flex items-center justify-between">

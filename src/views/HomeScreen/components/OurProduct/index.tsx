@@ -2,14 +2,30 @@ import { Button } from '@heroui/button';
 import ProductItemVertical from 'components/molecules/productItemVertical';
 import Title from 'components/molecules/title';
 import { PRODUCT_KEY } from 'constants/product';
-import { useAppSelector } from 'hooks/useAppDispatch';
-import React from 'react';
+import { useAppDispatch, useAppSelector } from 'hooks/useAppDispatch';
+import React, { useEffect, useState } from 'react';
+import { fetchProductsByCollection } from 'stores/productSlice';
+import ItemPagination from 'views/CollectionsScreen/components/ItemPagination';
 
 const OurProduct = () => {
-  const productState = useAppSelector(
-    (state) => state.products.collections[PRODUCT_KEY.categories],
-  );
-  const products = productState?.pages?.[productState?.currentPage || 1];
+  const [currentPage, setCurrentPage] = useState<number>(1);
+
+  const dispatch = useAppDispatch();
+  const productState = useAppSelector((state) => state.products.collections[PRODUCT_KEY.ourStore]);
+  const totalPage = productState?.totalPages;
+  const products = productState?.pages?.[currentPage || 1];
+
+  useEffect(() => {
+    dispatch(
+      fetchProductsByCollection({
+        collectionKey: PRODUCT_KEY.ourStore,
+        page: currentPage,
+        limit: 9,
+        name: '',
+      }),
+    );
+  }, [currentPage]);
+
   return (
     <div className="mt-10 flex flex-col justify-center items-center gap-5 p-4">
       <Title title="Don't Miss Our Products" />
@@ -18,7 +34,11 @@ const OurProduct = () => {
           <ProductItemVertical key={index} product={product} imageSize={100} isBorderImage={true} />
         ))}
       </div>
-      <Button className="bg-green-500 text-white! w-fit rounded-full font-bold">Load more</Button>
+      <ItemPagination
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        totalPage={totalPage}
+      />
     </div>
   );
 };

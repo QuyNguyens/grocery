@@ -1,22 +1,26 @@
 'use client';
 
-import { ArrowUturnLeftIcon } from '@heroicons/react/24/outline';
-import { useRouter } from 'next/navigation';
-import React from 'react';
+import React, { useMemo } from 'react';
 import ProductDetail from './components/ProductDetail';
-import { CART_ITEMS } from 'constants/product';
 import ShippingInfo from './components/ShippingInfo';
 import { useAppSelector } from 'hooks/useAppDispatch';
+import { CalculateDiscount } from 'utils/calculateDiscount';
 
 const CheckOutScreen = () => {
-  const router = useRouter();
   const cartItems = useAppSelector((state) => state.cart.cartItem);
+
+  const totalPrice = useMemo(() => {
+    return cartItems.reduce((sum, item) => {
+      const itemTotal = CalculateDiscount(item.price, item.discount.value) * item.quantity;
+      return sum + itemTotal;
+    }, 0);
+  }, [cartItems]);
 
   return (
     <div className="w-full flex flex-col items-center justify-center p-4 pt-10 bg-white">
       <div className="w-full max-w-[1200px] flex gap-8">
-        <ProductDetail cartItems={cartItems} />
-        <ShippingInfo />
+        <ProductDetail totalPrice={totalPrice} cartItems={cartItems} />
+        <ShippingInfo totalPrice={totalPrice} cartItems={cartItems} />
       </div>
     </div>
   );

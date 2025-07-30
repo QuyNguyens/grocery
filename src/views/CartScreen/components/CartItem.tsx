@@ -9,17 +9,12 @@ import { useAppDispatch } from 'hooks/useAppDispatch';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { deleteCartItem, updateCartItem } from 'stores/cartSlice';
 import { CartItem as CartItemData } from 'types/cart';
+import { formatCurrency } from 'utils/formatCurrency';
 
 type CartItemProps = {
   cartItem: CartItemData;
   discountedPrice: number;
 };
-
-const formatCurrency = (value: number) =>
-  new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-  }).format(value);
 
 const CartItem = ({ discountedPrice, cartItem }: CartItemProps) => {
   const [amount, setAmount] = useState<number>(cartItem.quantity);
