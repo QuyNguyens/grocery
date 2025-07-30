@@ -4,7 +4,7 @@ export function NextArrow(props: any) {
   const { onClick } = props;
   return (
     <div
-      className="absolute right-3 top-1/2 -translate-y-1/2 z-10 cursor-pointer p-1 rounded-full bg-green-500 hover:bg-green-600"
+      className="absolute z-5 right-3 top-1/2 -translate-y-1/2 cursor-pointer p-1 rounded-full bg-green-500 hover:bg-green-600"
       onClick={onClick}
     >
       <ChevronDoubleRightIcon className="w-5 h-5 text-white!" />
@@ -16,7 +16,7 @@ export function PrevArrow(props: any) {
   const { onClick } = props;
   return (
     <div
-      className="absolute left-3 top-1/2 -translate-y-1/2 z-10 cursor-pointer p-1 rounded-full bg-green-500 hover:bg-green-600"
+      className="absolute z-5 left-3 top-1/2 -translate-y-1/2 cursor-pointer p-1 rounded-full bg-green-500 hover:bg-green-600"
       onClick={onClick}
     >
       <ChevronLeftIcon className="w-5 h-5 text-white!" />

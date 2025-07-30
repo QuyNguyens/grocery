@@ -1,18 +1,14 @@
-import { Image } from '@heroui/image';
 import React from 'react';
-import Logo from '../../../../../public/logo/app-logo.png';
-import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from '@heroui/navbar';
+import { Navbar, NavbarContent, NavbarItem } from '@heroui/navbar';
 import { Link } from '@heroui/link';
 import { Button } from '@heroui/button';
 import Search from './Search';
 import Cart from './Cart';
 import Avatar from './Avatar';
-import { useRouter } from 'next/navigation';
 import HeaderLogo from 'components/molecules/headerLogo';
 
 const Header = () => {
   const accessToken = null;
-  const router = useRouter();
 
   return (
     <Navbar disableAnimation isBordered>

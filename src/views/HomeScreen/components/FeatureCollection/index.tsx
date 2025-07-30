@@ -10,7 +10,7 @@ import ProductSkeleton from 'components/molecules/productSkeleton';
 
 const FeatureCollection = () => {
   const productState = useAppSelector(
-    (state) => state.products.collections[PRODUCT_KEY.categories],
+    (state) => state.products.collections[PRODUCT_KEY.topDeal],
   );
   const categories = productState?.pages?.[productState?.currentPage || 1];
 

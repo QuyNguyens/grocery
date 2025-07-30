@@ -1,7 +1,6 @@
-'use client';
 import React from 'react';
 const CollectionsLayout = ({ children }: { children: React.ReactNode }) => {
-  return <>{children}</>;
+  return <div>{children}</div>;
 };
 
 export default CollectionsLayout;

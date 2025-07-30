@@ -5,6 +5,8 @@ import { usePathname } from 'next/navigation';
 import MainLayout from '../mainLayout';
 import { Provider } from 'react-redux';
 import { store } from 'stores/store';
+import { HeroUIProvider } from '@heroui/system';
+import { ToastProvider } from '@heroui/react';
 
 export default function InitLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const pathname = usePathname();
@@ -25,8 +27,10 @@ export default function InitLayout({ children }: Readonly<{ children: React.Reac
   }, [children, pathname]);
 
   return (
-    <>
+    <HeroUIProvider>
+      <ToastProvider placement="top-center" toastOffset={60} />
+
       <Provider store={store}>{renderLayout()}</Provider>
-    </>
+    </HeroUIProvider>
   );
 }

@@ -34,7 +34,7 @@ const NavBarItems = () => {
   }, []);
 
   return (
-    <div className="relative mt-3 px-3 pb-2 max-w-[1200px] mx-auto flex items-center gap-10 border-b border-gray-300">
+    <div className="relative z-999 px-3 p-2 max-w-[1200px] mx-auto flex items-center gap-10 border-b bg-white border-gray-300">
       <Department />
       <span
         onClick={() => router.push('/')}

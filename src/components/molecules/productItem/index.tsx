@@ -3,20 +3,18 @@ import { Image } from '@heroui/image';
 import React from 'react';
 import ClientStarRatings from '../clientStarRating';
 import { Product } from 'types/product';
-import { useRouter } from 'next/navigation';
 
 type ProductItemProps = {
   product: Product;
 };
 
 const ProductItem = ({ product }: ProductItemProps) => {
-  const router = useRouter();
+  const handleNavigate = () => {
+    window.location.href = `/products/${product._id}`;
+  };
 
   return (
-    <div
-      onClick={() => router.push(`/products/${product._id}`)}
-      className="flex flex-col gap-2 group"
-    >
+    <div onClick={handleNavigate} className="flex flex-col gap-2 group z-5">
       <Image
         className="w-full border border-gray-300 rounded-lg overflow-hidden"
         alt="product"

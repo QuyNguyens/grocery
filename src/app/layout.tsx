@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
-import { HeroUIProvider, ToastProvider } from '@heroui/react';
 import { SeoProvider } from 'context/SeoContext';
 import { SeoUpdater } from 'components/molecules/seoUpdater';
 import InitLayout from 'components/layouts/initLayout';
@@ -32,12 +31,9 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <SeoProvider>
           <SeoUpdater />
-          <HeroUIProvider>
-            <ToastProvider placement="top-center" toastOffset={60} />
-            <UserProvider>
-              <InitLayout>{children}</InitLayout>
-            </UserProvider>
-          </HeroUIProvider>
+          <UserProvider>
+            <InitLayout>{children}</InitLayout>
+          </UserProvider>
         </SeoProvider>
       </body>
     </html>

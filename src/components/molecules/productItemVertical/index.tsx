@@ -35,7 +35,7 @@ const ProductItemVertical = ({
   return (
     <div
       onClick={() => router.push(`/products/${product._id}`)}
-      className={`flex items-center ${isAddToCart ? 'gap-5' : 'gap-2'} group p-2 bg-white rounded-lg group`}
+      className={`flex items-center z-5 ${isAddToCart ? 'gap-5' : 'gap-2'} group p-2 bg-white rounded-lg group`}
     >
       <Image
         className={`${isBorderImage ? 'border border-gray-200' : ''} rounded-lg`}

@@ -13,7 +13,7 @@ const CatalogItems = () => {
           key={index}
           onClick={() => router.push(`${ROUTES.collections}/${item.name}`)}
           className="
-            shrink-0 overflow-hidden                        
+            shrink-0 overflow-hidden z-5                        
             group bg-white rounded-xl shadow-xl
             flex flex-col items-center justify-center
             py-5 gap-2

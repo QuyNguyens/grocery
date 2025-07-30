@@ -10,7 +10,6 @@ import { useAppDispatch, useAppSelector } from 'hooks/useAppDispatch';
 import { useParams } from 'next/navigation';
 import { PRODUCT_KEY } from 'constants/product';
 import ItemPagination from './components/ItemPagination';
-import { Product } from 'types/product';
 import { getFilteredProducts } from './components/productFiltered';
 
 const CollectionScreen = () => {
@@ -89,7 +88,7 @@ const CollectionScreen = () => {
   }, [products, selectedNames]);
 
   return (
-    <div className="mt-10 w-full flex flex-col items-center justify-center p-4 bg-white">
+    <div className="w-full flex flex-col items-center justify-center p-4 bg-white">
       <div className="w-full max-w-[1200px] flex gap-8">
         <ItemsFilter
           selectedNames={selectedNames}
