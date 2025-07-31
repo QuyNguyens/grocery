@@ -12,7 +12,7 @@ const ImageSlider = ({ imageMain, images, setImageMain }: ImageSliderProps) => {
   return (
     <div className="w-full relative flex flex-col gap-2">
       <Image
-        className="rounded-lg border border-gray-200"
+        className="rounded-lg border border-gray-200 z-5"
         alt="image main"
         src={images[imageMain]}
         width={620}

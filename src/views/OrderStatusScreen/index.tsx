@@ -37,6 +37,7 @@ const OrderStatusScreen = () => {
     return ordersDetail.reduce((total, item) => {
       return total + item.price * item.quantity;
     }, 0);
+    
   }, [ordersDetail]);
   console.log('totalPrice: ', totalPrice);
   return (

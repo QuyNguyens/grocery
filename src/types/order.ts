@@ -1,6 +1,7 @@
 export type OrderStatus = 'pending' | 'paid' | 'shipped' | 'delivered' | 'cancelled';
 
 export interface Order {
+  _id: string;
   userId: string;
   status: OrderStatus;
   totalAmount: number;

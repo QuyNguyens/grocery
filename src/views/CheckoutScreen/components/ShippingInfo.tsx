@@ -8,6 +8,7 @@ import cartService from 'services/cart.service';
 import { CartItem } from 'types/cart';
 import { useUserContext } from 'context/AuthContext';
 import { DeliveryAddress } from 'types/deliveryAddress';
+import { CalculateDiscount } from 'utils/calculateDiscount';
 
 type ShippingInfoProps = {
   cartItems: CartItem[];
@@ -100,7 +101,15 @@ const ShippingInfo = ({ cartItems, totalPrice }: ShippingInfoProps) => {
           detail: `${inputsValue.address}, ${addressSelected.ward.name}, ${addressSelected.district.name}, ${addressSelected.province.name}`,
           isDefault: true,
         };
-        const res = await cartService.payment(user?._id, totalPrice, cartItems, userAddress);
+        const newCartItem = cartItems.map((item) => {
+          return { ...item, price: CalculateDiscount(item.price, item.discount.value) };
+        });
+        const res = await cartService.payment(
+          user?._id,
+          totalPrice + totalPrice / 10 + 5,
+          newCartItem,
+          userAddress,
+        );
         if (res.data.success) {
           localStorage.setItem('user-address', JSON.stringify(userAddress));
           window.location.href = res.data.data;

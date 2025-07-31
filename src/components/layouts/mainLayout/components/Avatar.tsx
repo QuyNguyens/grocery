@@ -60,7 +60,11 @@ export default function Avatar() {
         <DropdownItem startContent={<UserCircleIcon className="w-6 h-6" />} key="profile">
           <h3>Profile</h3>
         </DropdownItem>
-        <DropdownItem startContent={<ShoppingBagIcon className="w-6 h-6" />} key="order">
+        <DropdownItem
+          onClick={() => router.push('/order/order-detail')}
+          startContent={<ShoppingBagIcon className="w-6 h-6" />}
+          key="order"
+        >
           <h3>Order</h3>
         </DropdownItem>
         <DropdownItem
