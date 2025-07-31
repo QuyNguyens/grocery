@@ -12,6 +12,9 @@ import Element from './components/Element';
 import { ROUTES } from 'constants/routes';
 import { CategoryGroup } from 'types/category';
 import { categoryServices } from 'services/category.service';
+import { fetchProductsByCollection } from 'stores/productSlice';
+import { PRODUCT_KEY } from 'constants/product';
+import { useAppDispatch } from 'hooks/useAppDispatch';
 
 const NavBarItems = () => {
   const [activeId, setActiveId] = useState<string | null>(null);
@@ -31,6 +34,51 @@ const NavBarItems = () => {
       }
     };
     fetchCategory();
+  }, []);
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(
+      fetchProductsByCollection({
+        collectionKey: PRODUCT_KEY.categories,
+        page: 1,
+        limit: 8,
+        name: 'Vegetables',
+      }),
+    );
+    dispatch(
+      fetchProductsByCollection({
+        collectionKey: PRODUCT_KEY.bestSelling,
+        page: 1,
+        limit: 8,
+        name: '',
+      }),
+    );
+    dispatch(
+      fetchProductsByCollection({
+        collectionKey: PRODUCT_KEY.topDeal,
+        page: 1,
+        limit: 8,
+        name: '',
+      }),
+    );
+    dispatch(
+      fetchProductsByCollection({
+        collectionKey: PRODUCT_KEY.special,
+        page: 1,
+        limit: 8,
+        name: '',
+      }),
+    );
+    dispatch(
+      fetchProductsByCollection({
+        collectionKey: PRODUCT_KEY.ourStore,
+        page: 1,
+        limit: 9,
+        name: '',
+      }),
+    );
   }, []);
 
   return (
@@ -53,7 +101,7 @@ const NavBarItems = () => {
       </MenuDropdown>
       <MenuDropdown
         routeName={`${ROUTES.collections}/${ROUTES.special}`}
-        id="special"  
+        id="special"
         label="Special"
         activeId={activeId}
         setActiveId={setActiveId}
