@@ -10,7 +10,7 @@ type ItemPaginationProps = {
 const ItemPagination = ({ currentPage, totalPage, setCurrentPage }: ItemPaginationProps) => {
   return (
     <div className="flex flex-col gap-5">
-      <Pagination color="success" page={currentPage} total={totalPage} onChange={setCurrentPage} />
+      <Pagination className='z-5' color="success" page={currentPage} total={totalPage} onChange={setCurrentPage} />
       <div className="flex gap-2">
         <Button
           color="success"

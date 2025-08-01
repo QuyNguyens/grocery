@@ -6,6 +6,7 @@ export interface RatingCustomerType {
 }
 
 export interface UserRating {
+  userId: string;
   rating: number;
   comment: string;
   createdAt?: Date;

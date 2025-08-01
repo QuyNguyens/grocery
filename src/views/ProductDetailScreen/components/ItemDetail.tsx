@@ -1,7 +1,6 @@
 import { Button } from '@heroui/button';
 import ClientStarRatings from 'components/molecules/clientStarRating';
 import React, { useCallback, useState } from 'react';
-import { PlusIcon, MinusIcon } from '@heroicons/react/24/outline';
 import { addToast, Divider } from '@heroui/react';
 import ColorFilter from 'views/ProductFilter/componens/ColorFilter';
 import { useUserContext } from 'context/AuthContext';
@@ -9,8 +8,6 @@ import { usePathname, useRouter } from 'next/navigation';
 import { ROUTES } from 'constants/routes';
 import { ProductVariant } from 'types/product';
 import QuantityCustom from 'components/molecules/quantityCustom';
-import { CartItem } from 'types/cart';
-import cartService from 'services/cart.service';
 import { useAppDispatch } from 'hooks/useAppDispatch';
 import { addCartItem } from 'stores/cartSlice';
 

@@ -6,4 +6,5 @@ export const PREFIX_SERVICES = {
   cart_service: '/api/cart',
   vnpay_service: '/api/vnpay',
   order_service: '/api/orders',
+  review_service: '/api/review',
 };
