@@ -8,7 +8,7 @@ const CatalogItems = () => {
   const router = useRouter();
   return (
     <div className="flex flex-nowrap gap-5 w-full overflow-hidden">
-      {catalogItems.map((item, index) => (
+      {catalogItems?.map((item, index) => (
         <div
           key={index}
           onClick={() => router.push(`${ROUTES.collections}/${item.name}`)}

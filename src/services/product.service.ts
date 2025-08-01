@@ -6,12 +6,14 @@ const productServices = {
   create: async (params: Product) => {
     return axiosInstance.post(PREFIX_SERVICES.product_service, '/create', params);
   },
+
   get: async (categoryId: string, page: number = 1, limit: number = 10) => {
     return axiosInstance.get(
       PREFIX_SERVICES.product_service,
       `$categoryId=${categoryId}&page=${page}&limit=${limit}`,
     );
   },
+
   fetchProductsByCollection: async (
     collectionKey: string,
     page: number = 1,
@@ -22,6 +24,10 @@ const productServices = {
       PREFIX_SERVICES.product_service,
       `/${collectionKey}?name=${name}&page=${page}&limit=${limit}`,
     );
+  },
+
+  filter: async (keyword: string) => {
+    return await axiosInstance.get(PREFIX_SERVICES.product_service, `/filter?keyword=${keyword}`);
   },
 };
 

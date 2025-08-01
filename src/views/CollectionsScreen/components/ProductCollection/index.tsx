@@ -7,6 +7,8 @@ type ProductCollectionProps = {
   total: number;
   display: string;
   setDisplay: React.Dispatch<React.SetStateAction<string>>;
+  selectedOption: string;
+  setSelectedOption: React.Dispatch<React.SetStateAction<string>>;
 };
 
 const options = [
@@ -16,7 +18,14 @@ const options = [
   { value: 'grid-cols-1', icon: <Bars3Icon className="w-5 h-5" /> },
 ];
 
-const ProductCollection = ({ amount, total, display, setDisplay }: ProductCollectionProps) => {
+const ProductCollection = ({
+  amount,
+  total,
+  display,
+  setDisplay,
+  selectedOption,
+  setSelectedOption,
+}: ProductCollectionProps) => {
   return (
     <div className="w-full flex justify-end">
       <div className="flex gap-5 items-center">
@@ -26,9 +35,16 @@ const ProductCollection = ({ amount, total, display, setDisplay }: ProductCollec
         </p>
         <div className="hidden md:flex gap-4 items-center">
           <h4 className="whitespace-nowrap">Sort by:</h4>
-          <Select className="min-w-[180px] w-full" defaultSelectedKeys={[FILTER_BY[0]]}>
-            {FILTER_BY.map((item) => (
-              <SelectItem key={item}>{item}</SelectItem>
+          <Select
+            className="min-w-[180px] w-full"
+            onSelectionChange={(keys) => {
+              const selected = Array.from(keys)[0] as string;
+              setSelectedOption(selected);
+            }}
+            defaultSelectedKeys={[selectedOption]}
+          >
+            {Object.entries(FILTER_BY).map(([key, value]) => (
+              <SelectItem key={value}>{value}</SelectItem>
             ))}
           </Select>
         </div>
@@ -60,4 +76,4 @@ const ProductCollection = ({ amount, total, display, setDisplay }: ProductCollec
   );
 };
 
-export default ProductCollection;
+export default React.memo(ProductCollection);

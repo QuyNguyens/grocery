@@ -9,7 +9,9 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
     <main className="flex flex-col">
       <div className="sticky top-0 z-10">
         <Header />
-        <NavBarItems />
+        <div className="hidden lg:block">
+          <NavBarItems />
+        </div>
       </div>
       {children}
       {/* <Footer /> */}

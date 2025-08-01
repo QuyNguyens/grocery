@@ -6,9 +6,17 @@ import { Product } from 'types/product';
 
 type ProductItemProps = {
   product: Product;
+  isChooseOption?: boolean;
+  textSize?: string;
+  isRating?: boolean;
 };
 
-const ProductItem = ({ product }: ProductItemProps) => {
+const ProductItem = ({
+  product,
+  isChooseOption = true,
+  textSize = '',
+  isRating = true,
+}: ProductItemProps) => {
   const handleNavigate = () => {
     window.location.href = `/products/${product._id}`;
   };
@@ -20,20 +28,27 @@ const ProductItem = ({ product }: ProductItemProps) => {
         alt="product"
         src={product?.images[0].toString()}
       />
-      <p className="font-semibold text-sm line-clamp-2">{product.description}</p>
+      {product?.categoryType && (
+        <span className="text-sm text-gray-500 font-normal">
+          {product.categoryType.charAt(0).toUpperCase() + product.categoryType.slice(1)}
+        </span>
+      )}
+      <p className={`font-semibold text-sm line-clamp-2 ${textSize}`}>{product.name}</p>
 
-      <div className="flex gap-2 items-end">
-        <ClientStarRatings
-          rating={product?.rating || 0}
-          starRatedColor="#facc15"
-          starEmptyColor="#d1d5db"
-          numberOfStars={5}
-          starDimension="16px"
-          starSpacing="2px"
-        />
-        <h6 className="text-sm">({product?.totalRating})</h6>
-      </div>
-      <div className="flex gap-2">
+      {isRating && (
+        <div className="flex gap-2 items-end">
+          <ClientStarRatings
+            rating={product?.rating || 0}
+            starRatedColor="#facc15"
+            starEmptyColor="#d1d5db"
+            numberOfStars={5}
+            starDimension="16px"
+            starSpacing="2px"
+          />
+          <h6 className={`text-sm ${textSize}`}>({product?.totalRating})</h6>
+        </div>
+      )}
+      <div className={`flex gap-2 ${textSize}`}>
         {product.discount ? (
           <>
             <span className="line-through text-gray-500">${product.basePrice}.00</span>
@@ -46,17 +61,19 @@ const ProductItem = ({ product }: ProductItemProps) => {
             </div>
           </>
         ) : (
-          <span className=" text-gray-500">${product.basePrice}.00</span>
+          <h4 className=" text-gray-500 font-semibold">${product.basePrice}.00</h4>
         )}
       </div>
 
-      <Button
-        variant="light"
-        radius="full"
-        className="bg-[#EDF4F6] group-hover:bg-green-500! group-hover:text-white! font-semibold"
-      >
-        Choose Option
-      </Button>
+      {isChooseOption && (
+        <Button
+          variant="light"
+          radius="full"
+          className="bg-[#EDF4F6] group-hover:bg-green-500! group-hover:text-white! font-semibold"
+        >
+          Choose Option
+        </Button>
+      )}
     </div>
   );
 };

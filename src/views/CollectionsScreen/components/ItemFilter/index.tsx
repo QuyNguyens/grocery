@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Accordion, AccordionItem, Checkbox, CheckboxGroup } from '@heroui/react';
 import ColorFilter from './components/ColorFilter';
-import PriceFilter from './components/PriceFilter';
+import PriceFilter, { PriceType } from './components/PriceFilter';
 import { Product } from 'types/product';
 import { generateItemFilters } from './components/generateItemFilters';
 
@@ -11,9 +11,12 @@ type ItemsFilterProps = {
   setSelectedNames: React.Dispatch<React.SetStateAction<string[]>>;
   color: string;
   setColor: React.Dispatch<React.SetStateAction<string>>;
+  price: PriceType;
+  setPrice: React.Dispatch<React.SetStateAction<PriceType>>;
+
 };
 
-const ItemsFilter = ({ products, selectedNames, setSelectedNames, color, setColor }: ItemsFilterProps) => {
+const ItemsFilter = ({ products, selectedNames, setSelectedNames, color, setColor, price, setPrice }: ItemsFilterProps) => {
   const itemFilters = generateItemFilters(products);  
   return (
     <div className="min-w-[250px] hidden md:block rounded-xl border border-gray-200 h-fit">
@@ -45,7 +48,7 @@ const ItemsFilter = ({ products, selectedNames, setSelectedNames, color, setColo
                 aria-label={filter.title}
                 title={filter.title}
               >
-                <PriceFilter />
+                <PriceFilter price={price} setPrice={setPrice}/>
               </AccordionItem>
             );
           }

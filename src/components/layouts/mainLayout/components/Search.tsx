@@ -1,15 +1,43 @@
 import { Input } from '@heroui/input';
-import React, { useState, useRef, useEffect } from 'react';
+import { Divider } from '@heroui/react';
+import ProductItem from 'components/molecules/productItem';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
+import productServices from 'services/product.service';
+import { Product } from 'types/product';
+import debounce from 'lodash/debounce';
+import type { DebouncedFunc } from 'lodash';
 
 const SearchBox = () => {
   const [inputValue, setInputValue] = useState('');
   const [isFocused, setIsFocused] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const [productsFiltered, setProductsFiltered] = useState<Product[] | undefined>(undefined);
 
-  const suggestions = ['Apple', 'Banana', 'Cherry', 'Grapes', 'Orange', 'Strawberry'];
-  const filtered = suggestions.filter((item) =>
-    item.toLowerCase().includes(inputValue.toLowerCase()),
+  const inputRef = useRef<HTMLInputElement>(null);
+  const debouncedSearch: DebouncedFunc<(value: string) => void> = useMemo(
+    () =>
+      debounce((value: string) => {
+        (async () => {
+          try {
+            if (value.trim() === '') return;
+            const res = await productServices.filter(value);
+            if (res.data.success) {
+              setProductsFiltered(res.data.data);
+            }
+          } catch (error) {
+            console.error('Lỗi khi tìm kiếm sản phẩm: ', error);
+          }
+        })();
+      }, 1000),
+    [],
   );
+
+  useEffect(() => {
+    debouncedSearch(inputValue);
+
+    return () => {
+      debouncedSearch.cancel();
+    };
+  }, [inputValue, debouncedSearch]);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -40,22 +68,23 @@ const SearchBox = () => {
       </div>
 
       {isFocused && inputValue.trim().length > 0 && (
-        <div className="absolute top-full left-0 w-full bg-white border border-gray-200 shadow-md rounded-md mt-1 z-50 max-h-60 overflow-y-auto">
-          {filtered.length > 0 ? (
-            filtered.map((item, idx) => (
-              <div
-                key={idx}
-                className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                onClick={() => {
-                  setInputValue(item);
-                  setIsFocused(false);
-                }}
-              >
-                {item}
-              </div>
-            ))
+        <div className="absolute top-full left-0 w-full bg-white border p-3 border-gray-200 shadow-md rounded-md mt-1 z-50 overflow-y-auto">
+          <h3>Products</h3>
+          <Divider className="my-3" />
+          {productsFiltered && productsFiltered.length > 0 ? (
+            <div className="grid grid-cols-4 gap-2">
+              {productsFiltered.map((item, idx) => (
+                <ProductItem
+                  key={idx}
+                  product={item}
+                  isChooseOption={false}
+                  textSize="text-xs!"
+                  isRating={false}
+                />
+              ))}
+            </div>
           ) : (
-            <div className="px-4 py-2 text-gray-500">Không có kết quả</div>
+            <div className="px-4 py-2 text-gray-500 w-full">Không tìm thấy sản phẩm</div>
           )}
         </div>
       )}

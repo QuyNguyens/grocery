@@ -49,7 +49,7 @@ const CartItem = ({ discountedPrice, cartItem }: CartItemProps) => {
           alt="product image"
           src={cartItem.image}
           width={60}
-          className="rounded-lg border border-gray-200"
+          className="rounded-lg border border-gray-200 z-5"
         />
       </td>
       <td className="p-2">

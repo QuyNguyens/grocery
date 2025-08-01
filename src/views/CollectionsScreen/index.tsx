@@ -10,7 +10,9 @@ import { useAppDispatch, useAppSelector } from 'hooks/useAppDispatch';
 import { useParams } from 'next/navigation';
 import { PRODUCT_KEY } from 'constants/product';
 import ItemPagination from './components/ItemPagination';
-import { getFilteredProducts } from './components/productFiltered';
+import { filterByPrice, filterBySelect, getFilteredProducts } from './components/productFiltered';
+import { PriceType } from './components/ItemFilter/components/PriceFilter';
+import { FILTER_BY } from 'constants/filter';
 
 const CollectionScreen = () => {
   const [display, setDisplay] = useState<string>('grid-cols-4');
@@ -18,6 +20,11 @@ const CollectionScreen = () => {
   const [productKey, setProductKey] = useState<string>(PRODUCT_KEY.categories);
   const [selectedNames, setSelectedNames] = useState<string[]>([]);
   const [color, setColor] = useState<string>('');
+  const [price, setPrice] = useState<PriceType>({
+    lowestPrice: 50,
+    highestPrice: 1000,
+  });
+  const [selectedOption, setSelectedOption] = useState<string>(FILTER_BY.aToZ);
 
   const params = useParams();
   const slug = Array.isArray(params.slug) ? params.slug[0] : params.slug;
@@ -84,8 +91,11 @@ const CollectionScreen = () => {
   }, [isAutoLayout]);
 
   const filterProducts = useMemo(() => {
-    return getFilteredProducts(products, selectedNames);
-  }, [products, selectedNames]);
+    const filteredByNames = getFilteredProducts(products, selectedNames);
+    const filterByPrices = filterByPrice(filteredByNames, price);
+    const filterByOptions = filterBySelect(filterByPrices, selectedOption);
+    return filterByOptions;
+  }, [products, selectedNames, price, selectedOption]);
 
   return (
     <div className="w-full flex flex-col items-center justify-center p-4 bg-white">
@@ -96,6 +106,8 @@ const CollectionScreen = () => {
           color={color}
           setColor={setColor}
           products={products}
+          price={price}
+          setPrice={setPrice}
         />
         <div className="flex-1">
           <ProductCollection
@@ -106,6 +118,8 @@ const CollectionScreen = () => {
               setIsAutoLayout(false);
               setDisplay(val);
             }}
+            selectedOption={selectedOption}
+            setSelectedOption={setSelectedOption}
           />
           <div className="flex flex-col gap-5">
             <div className={`grid ${display} gap-5 mt-6 overflow-y-auto max-h-[105vh]`}>

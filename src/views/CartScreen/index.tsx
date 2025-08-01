@@ -5,6 +5,7 @@ import CartTable from './components/CartTable';
 import CheckoutInfo from './components/CheckoutInfo';
 import { useAppSelector } from 'hooks/useAppDispatch';
 import { Link } from '@heroui/link';
+import { CalculateDiscount } from 'utils/calculateDiscount';
 
 const CartScreen = () => {
   const [couponCode, setCouponCode] = useState<string>('');
@@ -12,7 +13,10 @@ const CartScreen = () => {
 
   const totalPriceItems = useMemo(() => {
     if (cartItems.length > 0)
-      return cartItems?.reduce((total, item) => total + item.price * item.quantity, 0);
+      return cartItems?.reduce(
+        (total, item) => total + CalculateDiscount(item.price, item.discount.value) * item.quantity,
+        0,
+      );
     return 0;
   }, [cartItems]);
 

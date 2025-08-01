@@ -25,9 +25,7 @@ export const ITEMS_FILTER: ItemFilter[] = [
   },
   {
     title: 'Category',
-    items: [
-      { name: 'Biscuits', amount: 1 },
-    ],
+    items: [{ name: 'Biscuits', amount: 1 }],
     id: 2,
   },
   {
@@ -42,9 +40,7 @@ export const ITEMS_FILTER: ItemFilter[] = [
   },
   {
     title: 'Weight',
-    items: [
-      { name: '', amount: 1 },
-    ],
+    items: [{ name: '', amount: 1 }],
     id: 5,
   },
 ];
@@ -76,13 +72,11 @@ export const COLORS_FILTER: ColorItem[] = [
   },
 ];
 
-export const FILTER_BY: string[] = [
-  'Featured',
-  'Best selling',
-  'Alphabetically, A-Z',
-  'Alphabetically, Z-A',
-  'Price, low to high',
-  'Price, high to low',
-  'Date, old to new',
-  'Date, new to old',
-];
+export const FILTER_BY = {
+  aToZ: 'Alphabetically, A-Z',
+  zToA: 'Alphabetically, Z-A',
+  lowToHigh: 'Price, low to high',
+  highToLow: 'Price, high to low',
+  oldToNew: 'Date, old to new',
+  newToOld: 'Date, new to old',
+};

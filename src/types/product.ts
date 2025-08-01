@@ -23,6 +23,7 @@ export interface Product {
   categoryType?: string;
   categoryRefType?: string[];
   inStock: number;
+  createdAt: Date;
 }
 
 export interface ProductState extends MetaCommon {

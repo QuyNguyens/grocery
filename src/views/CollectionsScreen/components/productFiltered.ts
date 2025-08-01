@@ -1,4 +1,7 @@
 import { Product } from 'types/product'; // Đảm bảo import đúng
+import { PriceType } from './ItemFilter/components/PriceFilter';
+import { CalculateDiscount } from 'utils/calculateDiscount';
+import { FILTER_BY } from 'constants/filter';
 
 export function getFilteredProducts(products: Product[], selectedNames: string[]): Product[] {
   const stockStatusFilters = selectedNames.filter(
@@ -46,4 +49,46 @@ export function getFilteredProducts(products: Product[], selectedNames: string[]
   }
 
   return products;
+}
+
+export function filterByPrice(products: Product[], priceType: PriceType): Product[] {
+  return products.filter((product) => {
+    const price = CalculateDiscount(product.basePrice, product?.discount?.value || 0);
+
+    if (priceType.highestPrice < priceType.lowestPrice || priceType.lowestPrice === 0) return true;
+    if (price < priceType.lowestPrice) return false;
+    if (price > priceType.highestPrice) return false;
+    return true;
+  });
+}
+
+export function filterBySelect(products: Product[], option: string): Product[] {
+  const sortedProducts = [...products];
+
+  switch (option) {
+    case FILTER_BY.aToZ:
+      return sortedProducts.sort((a, b) => a.name.localeCompare(b.name));
+
+    case FILTER_BY.zToA:
+      return sortedProducts.sort((a, b) => b.name.localeCompare(a.name));
+
+    case FILTER_BY.lowToHigh:
+      return sortedProducts.sort((a, b) => (a.basePrice ?? 0) - (b.basePrice ?? 0));
+
+    case FILTER_BY.highToLow:
+      return sortedProducts.sort((a, b) => (b.basePrice ?? 0) - (a.basePrice ?? 0));
+
+    case FILTER_BY.oldToNew:
+      return sortedProducts.sort(
+        (a, b) => new Date(a.createdAt!).getTime() - new Date(b.createdAt!).getTime(),
+      );
+
+    case FILTER_BY.newToOld:
+      return sortedProducts.sort(
+        (a, b) => new Date(b.createdAt!).getTime() - new Date(a.createdAt!).getTime(),
+      );
+
+    default:
+      return products;
+  }
 }
