@@ -29,10 +29,7 @@ interface FetchCartParams {
 // get cart by userId
 export const getCart = createAsyncThunk(
   'cart/getCart',
-  async (
-    { userId, page = 1, limit = 10 }: { userId: string; page?: number; limit?: number },
-    thunkAPI,
-  ) => {
+  async ({ userId, page = 1, limit = 10 }: FetchCartParams, thunkAPI) => {
     try {
       const response = await cartService.get(userId, page, limit);
       const { data, meta } = response.data;

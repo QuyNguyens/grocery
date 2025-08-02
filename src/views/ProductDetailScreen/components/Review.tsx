@@ -108,7 +108,7 @@ const Review = ({ productVariant }: ReviewProps) => {
         <div className="mt-3 flex items-center gap-6 p-10 rounded-lg bg-[#F7F7F7]">
           <div>
             <p>
-              <span className="text-4xl">{productVariant?.rating?.value.toFixed(1)}</span>/5
+              <span className="text-4xl">{productVariant?.rating?.value?.toFixed(1)}</span>/5
             </p>
             <p className="text-center text-sm">{productVariant?.rating?.total}</p>
             <p className="text-center text-sm">Reviews</p>

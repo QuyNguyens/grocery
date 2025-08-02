@@ -7,9 +7,11 @@ export interface Category {
 }
 
 export interface CategoryChildrenGroup {
-  _id: string;
-  name: string;
-  createdAt: Date;
+  _id?: string;
+  name?: string;
+  createdAt?: Date;
+  description?: string;
+  imageUrl?: string;
 }
 
 export interface CategoryGroup {

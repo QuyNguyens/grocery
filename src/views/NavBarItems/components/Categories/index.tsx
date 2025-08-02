@@ -23,7 +23,7 @@ const Categories = ({ categoryItems }: CategoriesProps) => {
               <Items
                 key={index}
                 title={categoryItem.parentName}
-                list={categoryItem.children.map((item) => item.name)}
+                list={categoryItem.children.map((item) => item?.name || "")}
               />
             ))}
           </div>

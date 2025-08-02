@@ -26,23 +26,28 @@ const ItemDetail = ({ product }: ItemDetailProps) => {
   const pathname = usePathname();
 
   const handleAddToCart = async () => {
-    const cartItem: any = {
-      productVariantId: product._id,
-      quantity: amount,
-      attributesSnapshot: {
-        name: colorSelected != '' ? 'Color' : weightSelected != '' ? 'Weight' : '',
-        value: colorSelected != '' ? colorSelected : weightSelected != '' ? weightSelected : '',
-      },
-      name: product.name,
-      image: product?.images[0],
-      type: product.categoryType,
-    };
-    dispatch(addCartItem({ item: cartItem, userId: user?._id }));
-    addToast({
-      title: 'Giỏ hàng',
-      description: 'Đã thêm sản phẩm vào giỏ hàng',
-      color: 'success'
-    });
+    if (!user?._id) {
+      localStorage.setItem('backUrl', pathname);
+      router.push(ROUTES.login);
+    } else {
+      const cartItem: any = {
+        productVariantId: product._id,
+        quantity: amount,
+        attributesSnapshot: {
+          name: colorSelected != '' ? 'Color' : weightSelected != '' ? 'Weight' : '',
+          value: colorSelected != '' ? colorSelected : weightSelected != '' ? weightSelected : '',
+        },
+        name: product.name,
+        image: product?.images[0],
+        type: product.categoryType,
+      };
+      dispatch(addCartItem({ item: cartItem, userId: user?._id }));
+      addToast({
+        title: 'Giỏ hàng',
+        description: 'Đã thêm sản phẩm vào giỏ hàng',
+        color: 'success',
+      });
+    }
   };
 
   const handleNavigate = useCallback((url: string) => {

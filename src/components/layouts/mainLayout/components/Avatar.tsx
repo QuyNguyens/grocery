@@ -14,6 +14,7 @@ import { useUserContext } from 'context/AuthContext';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { checkImageExists } from 'utils/checkImageExists';
+import { ROUTES } from 'constants/routes';
 
 export default function Avatar() {
   const { user, setUser } = useUserContext();
@@ -57,7 +58,7 @@ export default function Avatar() {
             <p className="text-xs font-medium underline">{user.email}</p>
           </div>
         </DropdownItem>
-        <DropdownItem startContent={<UserCircleIcon className="w-6 h-6" />} key="profile">
+        <DropdownItem onClick={() => router.push(ROUTES.profile)} startContent={<UserCircleIcon className="w-6 h-6" />} key="profile">
           <h3>Profile</h3>
         </DropdownItem>
         <DropdownItem

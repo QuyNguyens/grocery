@@ -7,7 +7,7 @@ const defaultUser: User = {
   _id: '',
   name: '',
   email: '',
-  avatar: undefined,
+  avatar: '',
   role: '',
   address: [],
 };

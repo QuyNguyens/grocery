@@ -10,31 +10,15 @@ import Categories from './components/Categories';
 import TopDeal from './components/TopDeal';
 import Element from './components/Element';
 import { ROUTES } from 'constants/routes';
-import { CategoryGroup } from 'types/category';
-import { categoryServices } from 'services/category.service';
 import { fetchProductsByCollection } from 'stores/productSlice';
 import { PRODUCT_KEY } from 'constants/product';
-import { useAppDispatch } from 'hooks/useAppDispatch';
+import { useAppDispatch, useAppSelector } from 'hooks/useAppDispatch';
+import { getCategory } from 'stores/categorySlice';
 
 const NavBarItems = () => {
   const [activeId, setActiveId] = useState<string | null>(null);
   const router = useRouter();
-  const [categoryItems, setCategoryItems] = useState<CategoryGroup[] | undefined>(undefined);
-
-  useEffect(() => {
-    const fetchCategory = async () => {
-      try {
-        const res = await categoryServices.get();
-
-        if (res?.data.success) {
-          setCategoryItems(res?.data.data);
-        }
-      } catch (error) {
-        console.error('error when get category: ', error);
-      }
-    };
-    fetchCategory();
-  }, []);
+  const categoryItems = useAppSelector((state) => state.categories.categories);
 
   const dispatch = useAppDispatch();
 
@@ -79,6 +63,9 @@ const NavBarItems = () => {
         name: '',
       }),
     );
+    if (categoryItems.length === 0) {
+      dispatch(getCategory());
+    }
   }, []);
 
   return (
