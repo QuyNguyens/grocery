@@ -26,9 +26,9 @@ const ProductDisplay = ({ amount, total, display, setDisplay }: ProductDisplayPr
         </p>
         <div className="hidden md:flex gap-4 items-center">
           <h4 className="whitespace-nowrap">Sort by:</h4>
-          <Select className="min-w-[180px] w-full" defaultSelectedKeys={[FILTER_BY[0]]}>
-            {FILTER_BY.map((item) => (
-              <SelectItem key={item}>{item}</SelectItem>
+          <Select className="min-w-[180px] w-full" defaultSelectedKeys={[FILTER_BY.aToZ]}>
+            {Object.entries(FILTER_BY).map(([key, value]) => (
+              <SelectItem key={value}>{value}</SelectItem>
             ))}
           </Select>
         </div>
