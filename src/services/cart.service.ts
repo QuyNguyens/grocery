@@ -8,6 +8,11 @@ const cartService = {
     return axiosInstance.get(
       PREFIX_SERVICES.cart_service,
       `/items?userId=${userId}&page=${page}&limit=${limit}`,
+      {
+        headers: {
+          requiresAuth: true,
+        },
+      },
     );
   },
 
@@ -15,6 +20,12 @@ const cartService = {
     return axiosInstance.put(
       PREFIX_SERVICES.cart_service,
       `/update?userId=${userId}&itemId=${itemId}&quantity=${quantity}`,
+      {},
+      {
+        headers: {
+          requiresAuth: true,
+        },
+      },
     );
   },
 
@@ -27,6 +38,11 @@ const cartService = {
       PREFIX_SERVICES.cart_service,
       `/add-cart-item?userId=${userId}`,
       cartItem,
+      {
+        headers: {
+          requiresAuth: true,
+        },
+      },
     );
   },
 
@@ -34,16 +50,30 @@ const cartService = {
     return axiosInstance.delete(
       PREFIX_SERVICES.cart_service,
       `/delete?userId=${userId}&itemId=${itemId}`,
+      {
+        headers: {
+          requiresAuth: true,
+        },
+      },
     );
   },
 
   async payment(userId: string, totalPrice: number, items: CartItem[], address: DeliveryAddress) {
-    return axiosInstance.post(PREFIX_SERVICES.vnpay_service, '/create-qr', {
-      userId,
-      totalPrice,
-      items,
-      address,
-    });
+    return axiosInstance.post(
+      PREFIX_SERVICES.vnpay_service,
+      '/create-qr',
+      {
+        userId,
+        totalPrice,
+        items,
+        address,
+      },
+      {
+        headers: {
+          requiresAuth: true,
+        },
+      },
+    );
   },
 };
 

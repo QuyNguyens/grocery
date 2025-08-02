@@ -32,7 +32,6 @@ const FormProfile = () => {
       newPassword: '',
       confirmPassword: '',
     });
-    console.log('vao day ?');
   }, [user?._id]);
 
   const handleAvatarChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -124,11 +123,11 @@ const FormProfile = () => {
             className="w-24 h-24 mx-auto rounded-full overflow-hidden cursor-pointer border border-gray-300"
           >
             {formData.avatar ? (
-              <Image src={formData.avatar} alt="Avatar" className="z-5" />
+              <Image src={formData.avatar} alt="Avatar" className="z-5 w-full h-full" />
             ) : (
               <Avatar
                 classNames={{
-                  base: 'bg-linear-to-br from-[#FFB457] to-[#FF705B]',
+                  base: 'bg-linear-to-br from-[#FFB457] to-[#FF705B] w-full h-full',
                   icon: 'text-black/80',
                 }}
                 icon={<AvatarIcon />}

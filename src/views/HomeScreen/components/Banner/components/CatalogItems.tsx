@@ -30,7 +30,7 @@ const CatalogItems = () => {
             height={45}
             className="transition-transform duration-700 ease-out transform-gpu [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]"
           />
-          <span className="font-medium text-sm hover:text-green-500">{item.name}</span>
+          <h4 className="font-medium text-sm hover:text-green-500">{item.name}</h4>
         </div>
       ))}
     </div>

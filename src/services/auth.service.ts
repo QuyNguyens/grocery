@@ -5,13 +5,13 @@ import { FormSignUpInputs } from 'views/SignUpScreen/components/FormSignUp';
 
 const authServices = {
   login: async (params: LoginFormInputs) => {
-    return axiosInstance.post(PREFIX_SERVICES.auth_service, '/login', params, {
-      withCredentials: true,
-    });
+    return axiosInstance.post(PREFIX_SERVICES.auth_service, '/login', params);
   },
+
   signup: async (params: FormSignUpInputs) => {
     return axiosInstance.post(PREFIX_SERVICES.auth_service, '/signup', params);
   },
+
   update: async (params: any) => {
     const formData = new FormData();
     formData.append('userId', params.userId);
@@ -26,6 +26,10 @@ const authServices = {
         requiresAuth: true,
       },
     });
+  },
+
+  logout: async (rfToken: string) => {
+    return axiosInstance.post(PREFIX_SERVICES.auth_service, '/logout', { rfToken });
   },
 };
 

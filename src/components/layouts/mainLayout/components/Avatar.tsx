@@ -15,6 +15,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { checkImageExists } from 'utils/checkImageExists';
 import { ROUTES } from 'constants/routes';
+import authServices from 'services/auth.service';
 
 export default function Avatar() {
   const { user, setUser } = useUserContext();
@@ -26,11 +27,26 @@ export default function Avatar() {
     checkImageExists(user?.avatar || '').then(setAvatarUrlExists);
   }, [user]);
 
-  const handleLogout = () => {
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('user');
-    setUser({ _id: '', name: '', email: '', avatar: undefined, role: '', address: [] });
-    router.push('/login');
+  const handleNavigate = (route: string) => {
+    if (user?._id) {
+      router.push(route);
+    } else {
+      router.push(ROUTES.login);
+    }
+  };
+
+  const handleLogout = async () => {
+    const rfToken = localStorage.getItem('refresh_token') || '';
+    try {
+      await authServices.logout(rfToken);
+      localStorage.removeItem('access_token');
+      localStorage.removeItem('refresh_token');
+      localStorage.removeItem('user');
+      setUser({ _id: '', name: '', email: '', avatar: undefined, role: '', address: [] });
+      router.push('/login');
+    } catch (error) {
+      console.error('Lỗi khi đăng xuất: ', error);
+    }
   };
 
   return (
@@ -58,11 +74,15 @@ export default function Avatar() {
             <p className="text-xs font-medium underline">{user.email}</p>
           </div>
         </DropdownItem>
-        <DropdownItem onClick={() => router.push(ROUTES.profile)} startContent={<UserCircleIcon className="w-6 h-6" />} key="profile">
+        <DropdownItem
+          onClick={() => handleNavigate(ROUTES.profile)}
+          startContent={<UserCircleIcon className="w-6 h-6" />}
+          key="profile"
+        >
           <h3>Profile</h3>
         </DropdownItem>
         <DropdownItem
-          onClick={() => router.push('/order/order-detail')}
+          onClick={() => handleNavigate(ROUTES.orderDetail)}
           startContent={<ShoppingBagIcon className="w-6 h-6" />}
           key="order"
         >

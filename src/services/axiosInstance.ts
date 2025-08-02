@@ -26,6 +26,17 @@ function setAccessToken(token: string) {
   }
 }
 
+function getRefreshToken(): string | null {
+  if (typeof window === 'undefined') return null;
+  return localStorage.getItem('refresh_token');
+}
+
+function setRefreshToken(token: string) {
+  if (typeof window !== 'undefined') {
+    localStorage.setItem('refresh_token', token);
+  }
+}
+
 let isRefreshing = false;
 let refreshSubscribers: ((token: string) => void)[] = [];
 
@@ -39,13 +50,21 @@ function onRefreshed(token: string) {
 }
 
 async function refreshAccessToken(): Promise<string | null> {
+  const refreshToken = getRefreshToken();
+  if (!refreshToken) return null;
+
   try {
-    const response = await axiosRaw.post('/api/users/refresh-token', {}, { withCredentials: true });
-    const newToken = response.data?.data;
-    if (newToken) {
-      setAccessToken(newToken);
-      return newToken;
+    const response = await axiosRaw.post('/api/users/refresh-token', { rfToken: refreshToken });
+    const { accessToken, refreshToken: newRefreshToken } = response.data?.data;
+
+    if (accessToken) {
+      setAccessToken(accessToken);
+      if (newRefreshToken) {
+        setRefreshToken(newRefreshToken);
+      }
+      return accessToken;
     }
+
     return null;
   } catch (err) {
     console.error('Refresh token failed:', err);
@@ -56,19 +75,15 @@ async function refreshAccessToken(): Promise<string | null> {
 axiosRaw.interceptors.request.use((config: InternalAxiosRequestConfig) => {
   const requiresAuth =
     config.headers?.requiresAuth === true || config.headers?.requiresAuth === 'true';
+
   if (requiresAuth) {
     const token = getAccessToken();
-
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
-    config.withCredentials = true;
-  } else {
-    config.withCredentials = false;
   }
 
   delete config.headers.requiresAuth;
-
   return config;
 });
 
@@ -85,7 +100,7 @@ axiosRaw.interceptors.response.use(
       originalRequest._retry = true;
 
       if (isRefreshing) {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
           subscribeTokenRefresh((token: string) => {
             originalRequest.headers = {
               ...originalRequest.headers,
@@ -118,7 +133,7 @@ axiosRaw.interceptors.response.use(
     }
 
     return Promise.reject(error);
-  },
+  }
 );
 
 function combineUrl(prefix: string, endpoint: string): string {

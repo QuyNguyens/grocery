@@ -17,6 +17,7 @@ export const ROUTES = {
   authCallback: '/auth/callback',
   collections: '/collections',
   orderStatus: '/order/order-status',
+  orderDetail: '/order/order-detail',
 };
 
 export const AUTH_ROUTES = [
@@ -31,3 +32,11 @@ export const HEADER_ONLY_ROUTES = [ROUTES.checkout, ROUTES.orderStatus];
 export const EMPTY_ROUTES = [ROUTES.authCallback];
 
 export const COLLECTIONS_ROUTES = [ROUTES.collections];
+
+export const PROTECTED_ROUTES = [
+  ROUTES.cart,
+  ROUTES.checkout,
+  ROUTES.orderDetail,
+  ROUTES.payment,
+  ROUTES.profile,
+]

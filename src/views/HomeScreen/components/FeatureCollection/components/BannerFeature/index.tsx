@@ -15,7 +15,7 @@ const BannerFeature = () => {
             titleLarge="Don't Miss Out on Tasty Grocery Deals"
             className="w-[35%] pl-4 md:pl-6 lg:pl-8 xl:pl-10 pt-5"
             buttonText="View More"
-            buttonClassName="bg-green-500 text-white!"
+            buttonClassName="hidden md:block bg-green-500 text-white!"
           />
         }
         className="flex-3 h-[180px] lg:h-[200px] xl:h-[230px]"

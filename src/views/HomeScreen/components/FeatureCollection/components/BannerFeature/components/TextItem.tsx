@@ -26,7 +26,7 @@ const TextItem = ({
           {flatSell}
         </span>
       )}
-      <h1 className="text-xl font-semibold text-[#184363]">{titleLarge}</h1>
+      <h1 className="text-sm md:text-xl font-semibold text-[#184363]">{titleLarge}</h1>
       {buttonText && (
         <Button className={`rounded-full font-semibold w-fit px-10 ${buttonClassName}`}>
           {buttonText}

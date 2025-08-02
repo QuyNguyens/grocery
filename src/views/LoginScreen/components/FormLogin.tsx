@@ -44,6 +44,7 @@ const FormLogin = () => {
         const { data } = res.data;
 
         localStorage.setItem('access_token', data?.accessToken);
+        localStorage.setItem('refresh_token', data?.refreshToken);
         localStorage.setItem('user', JSON.stringify(data?.user));
         setUser(data?.user);
 
