@@ -14,9 +14,9 @@ const CatalogItems = () => {
           onClick={() => router.push(`${ROUTES.collections}/${item.name}`)}
           className="
             shrink-0 overflow-hidden z-5                        
-            group bg-white rounded-xl shadow-xl
+            group bg-white rounded-xl shadow
             flex flex-col items-center justify-center
-            py-5 gap-2
+            py-5 gap-2 border border-gray-200
             basis-[calc((100%-1.25rem)/2)]       
             md:basis-[calc((100%-3.75rem)/4)]     
             lg:basis-[calc((100%-5rem)/5)]       

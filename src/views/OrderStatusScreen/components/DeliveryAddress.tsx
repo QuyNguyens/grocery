@@ -13,7 +13,7 @@ const DeliveryAddress = () => {
   }, []);
 
   return (
-    <div className="w-1/2 p-6 bg-white shadow-lg rounded-lg">
+    <div className="w-full md:w-1/2 p-6 order-2 md:order-1 bg-white shadow-lg rounded-lg">
       <h1 className="text-2xl font-semibold">Thông tin nhận hàng</h1>
       <div className="mt-3 flex flex-col gap-2">
         <p>

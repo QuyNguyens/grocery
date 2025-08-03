@@ -1,6 +1,7 @@
 import React from 'react';
 import { OrderDetail } from 'types/order';
 import OrderDetailItem from './OrderDetailItem';
+import OrderDetailMobileItem from './OrderDetailMobileItem';
 
 type OrdersDetailProps = {
   ordersDetail: OrderDetail[];
@@ -9,7 +10,7 @@ type OrdersDetailProps = {
 const OrdersDetail = ({ ordersDetail }: OrdersDetailProps) => {
   return (
     <div className="overflow-y-auto max-h-[400px] bg-white shadow-lg rounded-lg p-4">
-      <table className="w-full text-left">
+      <table className="hidden md:table w-full text-left">
         <thead>
           <tr className="font-semibold">
             <th className="p-2">Item</th>
@@ -26,6 +27,12 @@ const OrdersDetail = ({ ordersDetail }: OrdersDetailProps) => {
             })}
         </tbody>
       </table>
+
+      <div className="md:hidden space-y-4">
+        {ordersDetail.map((item, index) => {
+          return <OrderDetailMobileItem key={index} orderDetail={item} />;
+        })}
+      </div>
     </div>
   );
 };

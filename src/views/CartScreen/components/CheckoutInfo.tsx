@@ -18,7 +18,7 @@ const CheckoutInfo = ({ total, saleTax, couponCode, setCouponCode }: CheckoutInf
 
   return (
     <div className="w-full flex justify-end">
-      <div className="w-2/6 flex flex-col gap-2">
+      <div className="w-3/4 md:w-2/3 lg:w-2/6 flex flex-col gap-2">
         <div className="flex justify-between py-2 border-b border-gray-200">
           <h5 className="font-semibold">Subtotal:</h5>
           <span>${total}</span>

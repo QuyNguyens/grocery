@@ -51,7 +51,7 @@ const OrderStatusScreen = () => {
           <h1 className="text-3xl text-center text-red-500! font-semibold">Đặt hàng thất bại</h1>
         )}
         <OrdersDetail ordersDetail={ordersDetail} />
-        <div className="mt-5 flex justify-between gap-8">
+        <div className="mt-5 flex flex-col md:flex-row justify-between gap-8">
           <DeliveryAddress />
           <TotalInfo totalPrice={totalPrice} shippingFee={5} />
         </div>

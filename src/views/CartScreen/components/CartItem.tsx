@@ -80,7 +80,7 @@ const CartItem = ({ discountedPrice, cartItem }: CartItemProps) => {
         </div>
       </td>
       <td className="p-2">
-        <QuantityCustom inStock={10} amount={amount} setAmount={setAmount} />
+        <QuantityCustom inStock={cartItem.quantity} amount={amount} setAmount={setAmount} />
       </td>
       <td className="p-2">
         <h4 className="font-semibold">{formatCurrency(total)}</h4>

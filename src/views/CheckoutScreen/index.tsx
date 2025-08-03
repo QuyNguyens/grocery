@@ -19,12 +19,12 @@ const CheckOutScreen = () => {
 
   return (
     <div className="w-full flex flex-col items-center justify-center p-4 pt-10 bg-white">
-      <div className="w-full max-w-[1200px] flex gap-8">
+      <div className="w-full max-w-[1200px]">
         {cartItems && cartItems.length > 0 ? (
-          <>
+          <div className='flex flex-col md:flex-row gap-8'>
             <ProductDetail totalPrice={totalPrice} cartItems={cartItems} />
             <ShippingInfo totalPrice={totalPrice} cartItems={cartItems} />
-          </>
+          </div>
         ) : (
           <p className="text-center">
             You don't have any items,{' '}
