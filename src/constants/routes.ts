@@ -6,7 +6,6 @@ export const ROUTES = {
   profile: '/profile',
   home: '/',
   authors: '/authors',
-  detail: '/detail',
   cart: '/cart',
   payment: '/payment',
   ourStore: '/our-store',
@@ -18,6 +17,7 @@ export const ROUTES = {
   collections: '/collections',
   orderStatus: '/order/order-status',
   orderDetail: '/order/order-detail',
+  product: '/products',
 };
 
 export const AUTH_ROUTES = [
@@ -39,4 +39,4 @@ export const PROTECTED_ROUTES = [
   ROUTES.orderDetail,
   ROUTES.payment,
   ROUTES.profile,
-]
+];
