@@ -28,7 +28,7 @@ const Header = () => {
               <Link href="/login">Login</Link>
             </NavbarItem>
             <NavbarItem>
-              <Button as={Link} color="warning" href="/signup" variant="flat">
+              <Button as={Link} color="warning" href="/sign-up" variant="flat">
                 Sign Up
               </Button>
             </NavbarItem>
