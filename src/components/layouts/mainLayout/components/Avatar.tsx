@@ -27,14 +27,6 @@ export default function Avatar() {
     checkImageExists(user?.avatar || '').then(setAvatarUrlExists);
   }, [user]);
 
-  const handleNavigate = (route: string) => {
-    if (user?._id) {
-      router.push(route);
-    } else {
-      router.push(ROUTES.login);
-    }
-  };
-
   const handleLogout = async () => {
     const rfToken = localStorage.getItem('refresh_token') || '';
     try {
@@ -75,14 +67,14 @@ export default function Avatar() {
           </div>
         </DropdownItem>
         <DropdownItem
-          onClick={() => handleNavigate(ROUTES.profile)}
+          onClick={() => router.push(ROUTES.profile)}
           startContent={<UserCircleIcon className="w-6 h-6" />}
           key="profile"
         >
           <h3>Profile</h3>
         </DropdownItem>
         <DropdownItem
-          onClick={() => handleNavigate(ROUTES.orderDetail)}
+          onClick={() => router.push(ROUTES.orderDetail)}
           startContent={<ShoppingBagIcon className="w-6 h-6" />}
           key="order"
         >

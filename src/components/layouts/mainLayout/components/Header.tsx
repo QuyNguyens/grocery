@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Navbar, NavbarContent, NavbarItem } from '@heroui/navbar';
 import { Link } from '@heroui/link';
 import { Button } from '@heroui/button';
@@ -6,9 +6,10 @@ import Search from './Search';
 import Cart from './Cart';
 import Avatar from './Avatar';
 import HeaderLogo from 'components/molecules/headerLogo';
+import { useUserContext } from 'context/AuthContext';
 
 const Header = () => {
-  const accessToken = null;
+  const { user } = useUserContext();
 
   return (
     <Navbar disableAnimation isBordered>
@@ -21,13 +22,13 @@ const Header = () => {
       </NavbarContent>
 
       <NavbarContent className="flex-[2]" justify="end">
-        {accessToken ? (
+        {!user?._id ? (
           <>
             <NavbarItem className="hidden lg:flex">
-              <Link href="#">Login</Link>
+              <Link href="/login">Login</Link>
             </NavbarItem>
             <NavbarItem>
-              <Button as={Link} color="warning" href="#" variant="flat">
+              <Button as={Link} color="warning" href="/signup" variant="flat">
                 Sign Up
               </Button>
             </NavbarItem>

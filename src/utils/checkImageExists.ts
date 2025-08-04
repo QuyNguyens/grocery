@@ -1,10 +1,10 @@
-export const checkImageExists = async (url: string): Promise<boolean> => {
-  if (!url) return false;
+export const checkImageExists = (url: string): Promise<boolean> => {
+  return new Promise((resolve) => {
+    if (!url) return resolve(false);
 
-  try {
-    const res = await fetch(url, { method: 'HEAD' });
-    return res.ok;
-  } catch {
-    return false;
-  }
+    const img = new Image();
+    img.onload = () => resolve(true);
+    img.onerror = () => resolve(false);
+    img.src = url;
+  });
 };

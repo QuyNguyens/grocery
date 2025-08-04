@@ -10,13 +10,15 @@ const AuthCallbackScreen = () => {
   const { setUser } = useUserContext();
 
   useEffect(() => {
-    const accessToken = searchParams.get('token');
+    const accessToken = searchParams.get('access');
+    const refreshToken = searchParams.get('refresh');
     const userString = searchParams.get('user');
 
-    if (accessToken && userString) {
+    if (accessToken && userString && refreshToken) {
       const user = JSON.parse(decodeURIComponent(userString));
 
       localStorage.setItem('access_token', accessToken);
+      localStorage.setItem('refresh_token', refreshToken);
       localStorage.setItem('user', JSON.stringify(user));
 
       setUser(user);
